@@ -1,0 +1,2875 @@
+:root {
+    /* Color Palette - Strict Black & White */
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --accent-color: #000000;
+    --inverse-bg: #000000;
+    --inverse-text: #ffffff;
+
+    /* Typography */
+    --font-main: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+
+    /* Spacing */
+    --spacing-unit: 1rem;
+    --slide-padding: 8vw;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+    /* Prevent scrolling, we handle it manully */
+    height: 100vh;
+    width: 100vw;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#app {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.slides-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--slide-padding);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+}
+
+.slide.active {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0);
+}
+
+/* Typography Defaults */
+h1 {
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 60ch;
+    font-weight: 300;
+}
+
+/* Navigation UI */
+.navigation {
+    position: fixed;
+    bottom: 2rem;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+    mix-blend-mode: difference;
+    /* Ensures visibility on both bg colors */
+    color: #fff;
+    /* Base for difference mode */
+}
+
+button {
+    background: none;
+    border: 1px solid currentColor;
+    color: currentColor;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #fff;
+    color: #000;
+}
+
+.progress-indicator {
+    font-family: var(--font-main);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: currentColor;
+}
+
+/* Inverted Theme Classes */
+body.dark-mode {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+}
+
+/* Slide Specific Styles */
+
+/* Cover */
+/* Cover */
+#slide-cover {
+    /* Reset default flex centering only for this slide if we want custom absolute positioning, 
+       but we can keep flex column center for the MAIN content and use absolute for corners */
+    text-align: center;
+}
+
+#slide-cover .content {
+    align-items: center;
+    /* Center the "Portfolio" text */
+    margin-top: -2rem;
+    /* slight optical adjustment */
+}
+
+#slide-cover h1 {
+    font-size: clamp(4rem, 15vw, 12rem);
+    /* Big "Portfolio" */
+    margin: 0;
+    font-weight: 500;
+    /* Lighter weight for "Portfolio" */
+    letter-spacing: normal;
+    text-transform: none;
+    /* Often lowercase or Title Case for minimalist */
+}
+
+#slide-cover .subtitle {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    max-width: 90%;
+    /* Ensure long text doesn't hit edges on small screens */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.author-name {
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Corner Branding */
+.cover-brand {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid currentColor;
+    /* Line look */
+    width: 200px;
+    /* Or specific width for the line */
+}
+
+/* Cover Header (Icon + Year) */
+.cover-header {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Ensures vertical alignment */
+    height: 90px;
+    /* Match icon height context if needed, or auto */
+    pointer-events: none;
+    /* Let clicks pass if needed, though icon might need pointer-events: auto? No, image is not clickable? Actually it's just visual. */
+}
+
+.cover-icon {
+    /* Position handled by flex parent now */
+    width: 90px;
+    height: auto;
+    display: block;
+}
+
+.cover-year {
+    /* Position handled by flex parent now */
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+/* Right Arrow (Now Centered) */
+.cover-arrow-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.cover-arrow-container.centered-arrow {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Ensure year goes to right if icon is missing */
+.cover-header {
+    justify-content: flex-end;
+}
+
+.circle-arrow {
+    width: 60px;
+    height: 60px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.circle-arrow:hover {
+    transform: scale(1.1);
+    background: currentColor;
+    color: var(--inverse-text);
+}
+
+.circle-arrow svg {
+    display: block;
+}
+
+/* Make sure header doesn't conflict? */
+/* Actually, the previous CSS had #slide-cover .content align-items: flex-start. We changed that. */
+
+/* Index */
+.index-list {
+    list-style: none;
+}
+
+.index-list li {
+    font-size: clamp(2rem, 4vw, 5rem);
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.4;
+    line-height: 1.2;
+}
+
+.index-list li:hover {
+    opacity: 1;
+    transform: translateX(20px);
+}
+
+/* Slide 3: Intro */
+.intro-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    text-align: left;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.intro-text-col {
+    flex: 1;
+}
+
+#slide-intro .intro-text {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 100%;
+}
+
+.intro-image-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-swapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    /* Square container */
+    cursor: pointer;
+}
+
+.p-img {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Initial State: Main on top-left, Secondary on bottom-right smaller */
+.main-img {
+    z-index: 2;
+    top: 0;
+    left: 0;
+    transform: scale(1);
+    filter: brightness(1);
+}
+
+.sec-img {
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    transform: scale(0.85);
+    /* Resize a bit */
+    filter: brightness(0.6) grayscale(100%);
+    /* Dimmed */
+    opacity: 0.8;
+}
+
+/* Hover effect to suggest interactivity */
+.image-swapper:hover .sec-img {
+    filter: brightness(0.8) grayscale(50%);
+    transform: scale(0.9) translate(-10px, -10px);
+    /* Peek out */
+}
+
+/* Swapped State (toggled via JS) */
+.image-swapper.swapped .main-img {
+    z-index: 1;
+    transform: translate(40px, 40px) scale(0.85);
+    /* Move to secondary position */
+    filter: brightness(0.6) grayscale(100%);
+    opacity: 0.8;
+}
+
+.image-swapper.swapped .sec-img {
+    z-index: 2;
+    transform: translate(-40px, -40px) scale(1);
+    /* Move to main position */
+    filter: brightness(1) grayscale(0%);
+    opacity: 1;
+    bottom: auto;
+    right: auto;
+    top: 40px;
+    left: 40px;
+    /* Adjust coordinate reference via transform mostly, but here keeping simple */
+}
+
+/* Better Swap Logic: Just toggle classes? No, let's use transform on the container or images based on state */
+/* Let's refine the swap logic to be cleaner.
+   We will move them to specific coordinates.
+*/
+
+.p-img.main-img {
+    top: 0;
+    left: 0;
+}
+
+.p-img.sec-img {
+    top: 40px;
+    left: 40px;
+    /* Offset position */
+}
+
+/* Reset for clean transition logic */
+.image-swapper .main-img {
+    z-index: 10;
+    transform: translate(0, 0) scale(1);
+    filter: brightness(1);
+}
+
+.image-swapper .sec-img {
+    z-index: 5;
+    transform: translate(40px, 40px) scale(0.8);
+    filter: brightness(0.5);
+}
+
+/* When swapped */
+.image-swapper.swapped .main-img {
+    z-index: 5;
+    transform: translate(40px, 40px) scale(0.8);
+    filter: brightness(0.5);
+}
+
+.image-swapper.swapped .sec-img {
+    z-index: 10;
+    transform: translate(0, 0) scale(1);
+    filter: brightness(1);
+}
+
+@media (max-width: 900px) {
+    .intro-content {
+        flex-direction: column-reverse;
+        /* Text below images on mobile? Or images below? */
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .image-swapper {
+        width: 250px;
+        height: 250px;
+    }
+
+    .p-img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Slide 4: Resume */
+.resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    width: 100%;
+}
+
+.resume-grid h3 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resume-list,
+.skill-list {
+    list-style: none;
+}
+
+.resume-list li,
+.skill-list li {
+    margin-bottom: 2rem;
+}
+
+.resume-list strong {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.resume-list .date {
+    font-size: 0.9rem;
+    font-family: monospace;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.skill-list li {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-left: 2px solid currentColor;
+    padding-left: 1rem;
+}
+
+/* Slide 5: Architecture */
+.arch-diagram {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.node-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.node {
+    border: 2px solid currentColor;
+    padding: 1.5rem 2.5rem;
+    border-radius: 8px;
+    /* Slightly rounded, or keep 0 for brutalism? */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--bg-color);
+    /* Ensure text legible over connecting lines if needed */
+    z-index: 1;
+}
+
+.connector-line {
+    height: 2px;
+    width: 3rem;
+    background: currentColor;
+}
+
+.vertical {
+    height: 3rem;
+}
+
+.connector-vertical {
+    width: 2px;
+    height: 100%;
+    background: currentColor;
+    margin-left: 50%;
+    /* Center it roughly? No, need precision layout. */
+    /* This vertical connector logic is a bit weak with flexbox, but sufficient for minimalist vibe */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .resume-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .node-row {
+        flex-direction: column;
+    }
+
+    .connector-line {
+        width: 2px;
+        height: 2rem;
+    }
+}
+
+/* Resume Header & Image */
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.profile-img-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    border: 2px solid currentColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profile-img-placeholder::after {
+    content: 'IMG';
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.5;
+}
+
+/* Adjust grid gap since header takes space */
+
+/* Slide: Certifications (Interactive Folder Grid) */
+.certs-container,
+.hobbies-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* Changed from center */
+    align-items: flex-start;
+    gap: 3rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.break-line {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.folder-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+}
+
+/* --- Closed State (Default) --- */
+.folder-trigger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    text-align: center;
+}
+
+.folder-trigger:hover {
+    transform: scale(1.05);
+}
+
+.folder-icon {
+    width: 80px;
+    height: 80px;
+    color: currentColor;
+    margin-bottom: 0.5rem;
+}
+
+.folder-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.folder-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+}
+
+/* --- Open State (Modal Behavior) --- */
+.folder-content {
+    display: none;
+    position: fixed;
+    /* Modal overlay */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    max-width: 90vw;
+    height: 500px;
+    max-height: 80vh;
+    border: 2px solid currentColor;
+    border-radius: 0 8px 8px 8px;
+    padding: 2rem;
+    flex-direction: column;
+    background: var(--bg-color);
+    z-index: 1000;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+/* When Wrapper has 'open' class */
+.folder-wrapper.open .folder-trigger {
+    opacity: 0.3;
+    pointer-events: none;
+    display: none;
+    /* Combine display none from duplicate */
+}
+
+.folder-wrapper.open .folder-content {
+    display: flex;
+    animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* The Tab */
+.folder-content::before {
+    content: '';
+    position: absolute;
+    top: -42px;
+    left: -2px;
+    width: 220px;
+    /* Increased from 150px to fit Wells Fargo */
+    height: 40px;
+    background: var(--bg-color);
+    border: 2px solid currentColor;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    z-index: 1;
+}
+
+.folder-tab {
+    position: absolute;
+    top: -36px;
+    left: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 2;
+    padding: 0 1rem;
+    white-space: nowrap;
+    /* Prevent wrapping */
+}
+
+/* Fix border overlap for Tab? */
+/* A common trick is using background color to cover the bottom border of the tab, but we have transparency maybe?
+   Let's just position the title. The pseudo-element ::before makes the shape. */
+
+.folder-inner-body {
+    flex: 1;
+    overflow-y: auto;
+    /* Scroll if too many items */
+    padding-top: 1rem;
+    position: relative;
+}
+
+.close-folder-btn {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    font-size: 2rem;
+    line-height: 1;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 300;
+    padding: 0.5rem;
+    z-index: 10;
+}
+
+.folder-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.folder-list li a {
+    text-decoration: none;
+    font-size: 1.1rem;
+    color: currentColor;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.folder-list li a:hover {
+    text-decoration: underline;
+    transform: translateX(10px);
+}
+
+.folder-list li a::before {
+    content: '📄';
+    /* Document icon */
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* Scrollbar styling for folder */
+.folder-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.folder-body::-webkit-scrollbar-thumb {
+    background-color: currentColor;
+    border-radius: 3px;
+}
+
+.folder-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Retro Cassette Music Player --- */
+.cassette-player-container {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 1rem;
+    height: 350px;
+}
+
+/* -- Cassette (Left) -- */
+.cassette {
+    flex: 0 0 50%;
+    background: #333;
+    /* Charcoal-ish */
+    border-radius: 12px;
+    padding: 15px;
+    position: relative;
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.8),
+        0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 4px solid #444;
+}
+
+.cassette::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.cassette-label-area {
+    background: #e6b800;
+    /* Amber */
+    border-radius: 6px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.tape-window {
+    width: 180px;
+    height: 60px;
+    background: #111;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    position: relative;
+    border: 2px solid #666;
+}
+
+.reel {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #fff 20%, #888 21%, #111 22%, #eee 60%, #111 61%);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    position: relative;
+}
+
+.reel::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 4px;
+    background: #000;
+    transform: translate(-50%, -50%);
+}
+
+.reel::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 10px;
+    background: #000;
+    transform: translate(-50%, -50%);
+}
+
+.tape-bridge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.cassette-title {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #111;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 10px;
+    transform: rotate(-2deg);
+    margin-top: 5px;
+}
+
+.cassette-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 15px;
+    z-index: 10;
+}
+
+.control-btn {
+    background: #222;
+    color: #0f0;
+    /* Neon Green */
+    border: 2px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.control-btn:hover {
+    background: #333;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transform: translateY(2px);
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Animation State */
+.playing .reel {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* -- Lyrics Panel (Right) -- */
+.lyrics-panel {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    /* Glassmorphism start */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.lyrics-content {
+    flex: 1;
+    overflow-y: auto;
+    color: #ddd;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    text-align: center;
+    padding-right: 5px;
+    /* Space for scrollbar */
+    scroll-behavior: smooth;
+}
+
+.lyrics-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lyrics-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.lyric-line {
+    opacity: 0.5;
+    transition: all 0.3s;
+    margin-bottom: 8px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.lyric-line.active {
+    opacity: 1;
+    color: #e6b800;
+    /* Amber highlight */
+    font-weight: bold;
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.05);
+    text-shadow: 0 0 10px rgba(230, 184, 0, 0.5);
+}
+
+/* --- Resume Redesign (3-Column Grid) --- */
+.resume-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1.5fr 1.3fr;
+    gap: 2rem;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: left;
+    height: 90%;
+    /* Occupy fuller height */
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.resume-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    /* Ensure full height for justification */
+}
+
+/* Push the second section (and subsequent) to the bottom */
+.resume-column .resume-section:first-child {
+    flex-grow: 1;
+}
+
+.resume-section h3 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.5px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+}
+
+/* Items */
+.resume-item {
+    margin-bottom: 1.5rem;
+}
+
+.resume-role {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.2rem;
+}
+
+.resume-degree,
+.resume-header {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.resume-meta,
+.resume-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #444;
+    width: 100%;
+}
+
+.resume-school,
+.resume-company {
+    font-weight: 500;
+    font-style: italic;
+}
+
+.resume-date {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.resume-desc {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+/* Languages */
+.language-list {
+    list-style: none;
+    padding: 0;
+}
+
+.language-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 0.2rem;
+    font-size: 0.9rem;
+}
+
+.lang-level {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Software Icons */
+.software-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.software-icon {
+    width: 48px;
+    height: 48px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.software-icon:hover {
+    background: #e0e0e0;
+    transform: translateY(-3px);
+    color: #000;
+}
+
+.software-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Skills Layout */
+.skills-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.skill-category {
+    flex: 1;
+    min-width: 100px;
+}
+
+.skill-category h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2px;
+}
+
+.skill-category ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+    margin: 0;
+}
+
+.skill-category li {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Hobbies */
+.hobbies-list-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+/* Contact */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.contact-grid a {
+    text-decoration: none;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.contact-grid a:hover {
+    text-decoration: underline;
+    color: #000;
+}
+
+/* Scrollbar for resume grid */
+.resume-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.resume-grid::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 3px;
+}
+
+/* --- Interactive Intro Images --- */
+.intro-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    text-align: left;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.intro-text-col {
+    flex: 1;
+}
+
+#slide-intro .intro-text {
+    /* Existing font-size is good, just ensure width */
+    max-width: 100%;
+    font-family: "Crimson Text", serif;
+    font-size: 1.25rem;
+    /* Slightly larger for the serif font */
+    line-height: 1.6;
+}
+
+/* Optional: Use Playwrite for signature or emphasis if needed later */
+.handwritten {
+    font-family: "Playwrite US Modern", cursive;
+}
+
+.intro-image-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-swapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    cursor: pointer;
+}
+
+.p-img {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Initial State: Main top-left */
+.main-img {
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform: scale(1);
+    filter: brightness(1);
+}
+
+/* Secondary bottom-right */
+.sec-img {
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    transform: scale(0.85);
+    filter: brightness(0.6) grayscale(100%);
+    opacity: 0.8;
+}
+
+/* Swapped State */
+.image-swapper.swapped .main-img {
+    z-index: 1;
+    transform: translate(40px, 40px) scale(0.85);
+    filter: brightness(0.6) grayscale(100%);
+    opacity: 0.8;
+}
+
+.image-swapper.swapped .sec-img {
+    z-index: 2;
+    transform: translate(-40px, -40px) scale(1);
+    filter: brightness(1) grayscale(0%);
+    opacity: 1;
+}
+
+/* Hover hint */
+.image-swapper:hover .sec-img {
+    filter: brightness(0.8) grayscale(50%);
+    transform: scale(0.9) translate(-5px, -5px);
+}
+
+@media (max-width: 900px) {
+    .intro-content {
+        flex-direction: column-reverse;
+        gap: 2rem;
+        text-align: center;
+    }
+}
+
+/* --- Projects Slide Styles --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    /* Spacing for scroll */
+}
+
+.project-card {
+    background: var(--bg-color);
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    min-height: 250px;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.project-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.project-card-header h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-links a {
+    color: currentColor;
+    width: 24px;
+    height: 24px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.project-links a:hover {
+    color: #666;
+    /* Or accent color */
+    transform: scale(1.1);
+}
+
+.project-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.project-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.project-tech-stack span {
+    background: rgba(128, 128, 128, 0.1);
+    /* Subtle background */
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* Education Logos */
+.school-logo-container {
+    margin-top: 8px;
+    background: #fff;
+    display: inline-block;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.edu-logo {
+    height: 40px;
+    /* Adjust size as needed */
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+/* Contact Section Styles */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #666;
+    /* Or your accent color */
+}
+
+.contact-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Technical Skills Section */
+.tech-skills-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.tech-skill-item {
+    font-size: 0.95rem;
+    /* Slightly larger for readability */
+    line-height: 1.5;
+}
+
+.tech-category {
+    font-weight: 600;
+    margin-right: 0.4rem;
+}
+
+.tech-items {
+    opacity: 0.9;
+}
+
+/* Software Images */
+.soft-img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.software-icon:hover .soft-img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Align "Languages", "Softwares", "Contact" by fixing height of top sections */
+.resume-column .resume-section:first-child {
+    min-height: 380px;
+    /* Adjust this value based on content length of "Technical Skills" or "Experience" */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Theme Toggle Switch */
+.theme-toggle-wrapper {
+    position: fixed;
+    top: 6rem;
+    /* Moved down from 2rem to avoid 2026 text */
+    right: 2rem;
+    z-index: 9999;
+}
+
+#theme-toggle {
+    display: none;
+}
+
+.theme-toggle-label {
+    width: 60px;
+    height: 30px;
+    background-color: #333;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Calendar UI Styles */
+.calendar-container {
+    width: 100%;
+    max-width: 900px;
+    /* Wider container for side-by-side layout */
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05);
+    /* Subtle bg */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+body.dark-mode .calendar-container {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.calendar-header h3 {
+    text-align: left;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.calendar-layout {
+    display: flex;
+    gap: 4rem;
+    flex-wrap: wrap;
+    /* Responsive wrap */
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    flex: 1;
+    min-width: 300px;
+}
+
+.day-name {
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    cursor: default;
+}
+
+body.dark-mode .day {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.day.padding {
+    border: none;
+    background: transparent;
+}
+
+/* Highlighted Event Dates */
+.day.event-date {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+}
+
+body.dark-mode .day.event-date {
+    background-color: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+.day.event-date:hover {
+    transform: scale(1.1);
+}
+
+/* Events List Side Panel */
+.events-list {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.event-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    border-left: 3px solid currentColor;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+body.dark-mode .event-item {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.event-date-badge {
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0.8;
+}
+
+.event-info h4 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.event-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.theme-toggle-label .icon-sun,
+.theme-toggle-label .icon-moon {
+    width: 18px;
+    height: 18px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.theme-toggle-label svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Calendar Navigation */
+.calendar-container {
+    position: relative;
+    /* Context for absolute nav */
+}
+
+.calendar-controls {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.cal-nav-btn {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    color: currentColor;
+}
+
+body.dark-mode .cal-nav-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cal-nav-btn:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+body.dark-mode .cal-nav-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.cal-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.cal-nav-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Calendar Views */
+.calendar-view {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.calendar-view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.toggle-ball {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    z-index: 2;
+}
+
+/* Dark Mode State */
+body.dark-mode .theme-toggle-label {
+    background-color: #fff;
+    border: 1px solid #333;
+}
+
+body.dark-mode .theme-toggle-label .icon-sun,
+body.dark-mode .theme-toggle-label .icon-moon {
+    color: #333;
+}
+
+body.dark-mode .toggle-ball {
+    background-color: #000;
+    transform: translateX(30px);
+}
+
+/* Ensure visibility logic matches existing theme */
+body.dark-mode .theme-toggle-wrapper {
+    mix-blend-mode: normal;
+}
+
+/* Gallery Styles */
+.folder-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.gallery-link {
+    display: block;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.gallery-link:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+/* Direct Link Override */
+a.folder-wrapper.direct-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    /* maintain layout */
+}
+
+a.folder-wrapper.direct-link .folder-trigger {
+    /* Ensure it looks interactive */
+    cursor: pointer;
+}
+
+.gallery-photo {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: contain;
+    /* Ensure whole image is seen */
+}
+
+.photo-caption {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin: 0;
+    text-align: center;
+}
+
+/* Music Art Right Side */
+.music-art-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-drawing {
+    max-height: 250px;
+    width: auto;
+    filter: grayscale(100%);
+    transition: transform 0.3s ease;
+}
+
+.music-drawing:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+
+/* Adjust container to handle both items nicely */
+.cassette-player-container {
+    gap: 4rem;
+}
+
+/* --- Mobile Responsiveness --- */
+/* --- Mobile Responsiveness --- */
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+
+    /* Critical Global Reset for Mobile */
+    html,
+    body,
+    #app,
+    main {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 1. Slide Layout - Force Stretch */
+    .slide {
+        height: auto !important;
+        min-height: 100vh;
+        width: 100% !important;
+        padding: 80px 20px 40px 20px !important;
+        /* Proper spacing */
+        display: flex;
+        flex-direction: column;
+        align-items: inherit !important;
+        /* Reset alignment */
+        justify-content: flex-start;
+        overflow-y: visible;
+        box-sizing: border-box;
+    }
+
+    .content {
+        align-items: flex-start !important;
+        /* Force Left */
+        text-align: left !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .slides-container {
+        overflow-y: auto;
+        height: 100vh;
+        width: 100% !important;
+    }
+
+    /* 2. Intro Section - Force Left */
+    .intro-content {
+        display: flex;
+        flex-direction: column;
+        text-align: left !important;
+        align-items: flex-start !important;
+        /* Force Left */
+        gap: 1.5rem;
+        width: 100% !important;
+    }
+
+    .intro-image-col {
+        order: -1;
+        width: 100% !important;
+        display: flex;
+        justify-content: flex-start !important;
+        /* Align image left too? Or center it? User said "whole page". Center img, left text is standard. */
+        margin-bottom: 1rem;
+    }
+
+    /* Let's actually center the image but keep text left, it usually looks better. If user hates it we move left. */
+    .intro-image-col {
+        justify-content: center !important;
+    }
+
+    .p-img {
+        max-width: 250px;
+        height: auto;
+        width: 100%;
+        box-shadow: none !important;
+        /* Remove heavy shadow on mobile if it causes overflow */
+    }
+
+    /* 3. Grids - Force Full Width */
+    .resume-grid,
+    .projects-grid,
+    .hobbies-list-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 2rem;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        align-items: flex-start !important;
+        /* Force items left */
+    }
+
+    /* 4. Navigation */
+    .navigation {
+        bottom: 20px;
+        right: 20px;
+        flex-direction: row;
+        z-index: 999;
+    }
+
+    /* 5. Typography */
+    .content h1 {
+        font-size: 2rem !important;
+        text-align: left !important;
+        width: 100%;
+        margin: 0 0 1rem 0 !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+        text-align: left !important;
+        width: 100%;
+        margin: 0 0 1rem 0 !important;
+    }
+
+    p {
+        font-size: 0.95rem !important;
+        text-align: left !important;
+        width: 100% !important;
+        max-width: none !important;
+        line-height: 1.6;
+    }
+
+    .subtitle {
+        text-align: left !important;
+        padding: 0 !important;
+        margin: 0 0 1rem 0 !important;
+    }
+
+    /* 6. Calendar/Folders */
+    .folder-content {
+        width: 90vw !important;
+        max-width: 90vw !important;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        padding: 15px;
+        position: fixed;
+        top: 50%;
+    }
+}
+
+/* Ensure no fixed width interference */
+.project-card,
+.p-img {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- Text Animations (BlurInUp) --- */
+.char-wrapper {
+    display: inline-block;
+    opacity: 0;
+    /* Start hidden */
+    white-space: pre;
+    /* Preserve spaces */
+    will-change: transform, opacity, filter;
+}
+
+.animate-blur-in {
+    animation: blurInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes blurInUp {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+/* --- Globe Animation (Events Slide) --- */
+.globe-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    z-index: 0;
+    /* Behind content */
+    opacity: 0.6;
+    /* Subtle effect */
+    pointer-events: none;
+    /* Let clicks pass through */
+    max-width: 100vw;
+    /* Responsive constraint */
+}
+
+/* Ensure Events layout sits on top */
+.events-layout {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.events-header,
+.calendar-wrapper {
+    position: relative;
+    z-index: 2;
+    /* Content above globe */
+}
+
+/* --- Animated Theme Toggler --- */
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex !important;
+    /* Force visibility */
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483647 !important;
+    /* Max Z-Index */
+    overflow: hidden;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(5px);
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+    border-color: rgba(128, 128, 128, 0.6);
+}
+
+.theme-icons {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.sun-icon,
+.moon-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease;
+}
+
+/* Light Theme (Default): Show Sun, Hide Moon */
+body:not(.dark-mode) .sun-icon {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+body:not(.dark-mode) .moon-icon {
+    transform: rotate(90deg) scale(0);
+    opacity: 0;
+}
+
+/* Dark Theme: Hide Sun, Show Moon */
+body.dark-mode .sun-icon {
+    transform: rotate(-90deg) scale(0);
+    opacity: 0;
+}
+
+
+
+body.dark-mode .moon-icon {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+}
+
+/* --- Smooth Cursor --- */
+.cursor-dot,
+.cursor-outline {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 2147483647;
+    /* Max Z-Index */
+    pointer-events: none;
+    display: none;
+    /* Hidden by default (shown via JS/Media Query) */
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-color);
+}
+
+.cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--text-color);
+    opacity: 0.5;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+}
+
+/* Show cursor only on devices with fine pointers (mouse) */
+@media (hover: hover) and (pointer: fine) {
+    body {
+        cursor: none;
+        /* Hide default cursor */
+    }
+
+    .cursor-dot,
+    .cursor-outline {
+        display: block;
+    }
+
+    /* Ensure links/buttons explicitly show pointer state if needed,
+       but since we hide default cursor, we usually rely on custom cursor
+       expanding or changing color. For simplicity, we just keep custom cursor. */
+}
+
+/* --- Highlighted Visual Content (Resume) --- */
+/* Ensure high contrast for key info in both modes */
+.resume-company,
+.resume-date,
+.hobbies-list-grid span,
+.contact-link {
+    color: var(--text-color) !important;
+    opacity: 1 !important;
+}
+
+.resume-company {
+    font-weight: 700;
+}
+
+.resume-date {
+    font-weight: 500;
+}
+
+.hobbies-list-grid span {
+    font-weight: 700 !important;
+    border: none !important;
+    padding: 2px 0;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.contact-link {
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+    opacity: 0.8 !important;
+}
+
+/* --- Adjust Resume Spacing --- */
+.resume-section {
+    margin-bottom: 1rem !important;
+    /* Reduced from default/implicit */
+}
+
+.resume-section h3 {
+    margin-bottom: 0.5rem !important;
+    margin-top: 0 !important;
+}
+
+/* --- HyperText Animation --- */
+.hyper-text {
+    display: inline-block;
+    white-space: pre-wrap;
+    cursor: default;
+    position: relative;
+    font-weight: inherit;
+    /* Inherit bold from parent headers */
+}
+
+/* --- Consistent Fonts (Intro, Overview, Projects) --- */
+.resume-section,
+.resume-desc,
+.project-desc,
+.resume-role,
+.resume-degree,
+.resume-meta,
+.tech-items {
+    font-family: "Crimson Text", serif;
+}
+
+.resume-desc,
+.project-desc {
+    font-size: 1.1rem;
+    /* Slightly larger for readability */
+    line-height: 1.5;
+}
+
+/* --- Ripple Effect (Music Folder) --- */
+.music-folder-wrapper {
+    position: relative;
+    /* Ensure ripple is contained relative to folder */
+    overflow: visible;
+    /* Let ripples expand */
+}
+
+.ripple-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* Center behind icon */
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    /* Behind trigger */
+    pointer-events: none;
+    /* Don't block clicks */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ensure trigger is above ripple */
+.music-folder-wrapper .folder-trigger {
+    position: relative;
+    z-index: 1;
+}
+
+.ripple-circle {
+    position: absolute;
+    width: 200px;
+    /* Base size */
+    height: 200px;
+    border-radius: 50%;
+    background-color: rgba(128, 128, 128, 0.1);
+    /* Increased visibility */
+    border: 1px solid rgba(100, 100, 100, 0.5);
+    /* Stronger rim */
+    opacity: 0;
+    animation: ripple-effect 4s linear infinite;
+    /* Faster */
+}
+
+@keyframes ripple-effect {
+    0% {
+        transform: scale(0.5);
+        opacity: 0.8;
+        /* Start highly visible */
+    }
+
+    100% {
+        transform: scale(3);
+        /* Expand outwards */
+        opacity: 0;
+    }
+}
+
+/* --- Music Player Card (New Design) --- */
+.music-player-card {
+    position: relative;
+    width: 350px;
+    max-width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: var(--text-color);
+    transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+    z-index: 10;
+}
+
+/* Card Header */
+.music-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.music-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.music-card-desc {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    font-family: var(--font-main);
+}
+
+/* Card Content */
+.music-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Cover Art Container */
+.music-cover-container {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #f3f4f6;
+    background: linear-gradient(to bottom right, #a855f7, #ec4899);
+}
+
+.music-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Progress Bar */
+.music-progress-bar {
+    width: 100%;
+    height: 0.25rem;
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.music-progress-fill {
+    width: 33.333%;
+    height: 100%;
+    background-color: var(--text-color);
+    border-radius: 9999px;
+}
+
+/* Time Display */
+.music-time-display {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    font-family: monospace;
+    opacity: 0.7;
+}
+
+/* Footer Controls */
+.music-card-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 0.5rem;
+}
+
+.music-ctrl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-color);
+    padding: 0;
+}
+
+.music-ctrl-btn.outline {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.music-ctrl-btn.outline:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.music-ctrl-btn.primary {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.music-ctrl-btn.primary:hover {
+    opacity: 0.9;
+}
+
+.music-ctrl-btn svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* --- Border Beam Animation --- */
+.border-beam {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.border-beam::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    padding: 2px;
+
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+
+    background: conic-gradient(from 0deg, transparent 0deg, transparent 50deg, var(--beam-color) 100deg, transparent 150deg);
+    animation: beam-rotate 6s linear infinite;
+}
+
+/* Beam 1: Red */
+.beam-1 {
+    --beam-color: #ef4444;
+}
+
+.beam-1::after {
+    animation-delay: 0s;
+}
+
+/* Beam 2: Blue */
+.beam-2 {
+    --beam-color: #3b82f6;
+}
+
+.beam-2::after {
+    animation-delay: 3s;
+}
+
+@keyframes beam-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Magic Bento Grid Styles --- */
+:root {
+    /* Default (Light Mode) */
+    --bento-bg: #ffffff;
+    --bento-border: #e2e2e2;
+    --bento-text: #1a1a1a;
+    --bento-desc: #666666;
+    --bento-card-hover: rgba(0, 0, 0, 0.05);
+    --purple-glow: rgba(132, 0, 255, 0.2);
+}
+
+body.dark-mode {
+    --bento-bg: #0d0d12;
+    --bento-border: #392e4e;
+    --bento-text: #ffffff;
+    --bento-desc: rgba(255, 255, 255, 0.8);
+    --bento-card-hover: rgba(255, 255, 255, 0.05);
+}
+
+.bento-section {
+    position: relative;
+    user-select: none;
+    padding: 2rem 0;
+}
+
+.card-grid {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    grid-auto-rows: min-content;
+}
+
+/* Responsive Grid */
+@media (min-width: 600px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Removed fixed span for 3rd child as user requested reduced size */
+}
+
+.magic-bento-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: 20px;
+    /* rounded-xl/2xl */
+    border: 1px solid var(--bento-border);
+    background: var(--bento-bg);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+
+    /* Dynamic Props for Glow */
+    --glow-x: 50%;
+    --glow-y: 50%;
+    --glow-intensity: 0;
+    --glow-radius: 300px;
+}
+
+.magic-bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    /* softer shadow */
+    border-color: rgba(132, 0, 255, 0.5);
+    background-color: var(--bento-card-hover);
+    /* Optional: slight tint */
+    z-index: 2;
+}
+
+/* Header & Content */
+.magic-bento-card__header {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.magic-bento-card__label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bento-desc);
+    border: 1px solid var(--bento-border);
+    padding: 2px 8px;
+    border-radius: 99px;
+    display: inline-block;
+}
+
+.magic-bento-card__content {
+    color: var(--bento-text);
+    z-index: 2;
+    /* Above particles */
+    position: relative;
+}
+
+.magic-bento-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    font-family: 'Inter', sans-serif;
+    /* Override defaults */
+    color: var(--bento-text);
+}
+
+.magic-bento-card__description {
+    font-size: 0.9rem;
+    color: var(--bento-desc);
+    /* Use desc color var */
+    line-height: 1.5;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Border Glow Mask Effect */
+.magic-bento-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    /* Border Glow Width */
+    border-radius: inherit;
+    background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+            rgba(132, 0, 255, calc(var(--glow-intensity) * 1)) 0%,
+            transparent 100%);
+
+    /* Show only border */
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+
+    pointer-events: none;
+    opacity: 0;
+    /* Hidden by default, shown by JS logic or simplified hover */
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+.magic-bento-card:hover::after {
+    opacity: 1;
+}
+
+
+/* Particles */
+.particle-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(132, 0, 255, 1);
+    box-shadow: 0 0 6px rgba(132, 0, 255, 0.6);
+    pointer-events: none;
+    z-index: 1;
+    /* Below text */
+}
+
+/* Global Spotlight */
+.global-spotlight {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(132, 0, 255, 0.1) 0%,
+            transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Click Ripple */
+.bento-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(132, 0, 255, 0.4) 0%, transparent 70%);
+    transform: scale(0);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* --- Logo Loop Styles --- */
+.logoloop {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    --logoloop-gap: 40px;
+    --logoloop-logoHeight: 32px;
+    --logoloop-fadeColorAuto: #ffffff;
+}
+
+body.dark-mode .logoloop {
+    --logoloop-fadeColorAuto: #0d0d12;
+}
+
+.logoloop--fade::before,
+.logoloop--fade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(30px, 10%, 150px);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.logoloop--fade::before {
+    left: 0;
+    background: linear-gradient(to right, var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.logoloop--fade::after {
+    right: 0;
+    background: linear-gradient(to left, var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.logoloop__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    user-select: none;
+    position: relative;
+    z-index: 1;
+}
+
+.logoloop__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logoloop__item {
+    flex: 0 0 auto;
+    margin-right: var(--logoloop-gap);
+    display: flex;
+    align-items: center;
+}
+
+.logoloop__item img {
+    height: var(--logoloop-logoHeight);
+    width: auto;
+    display: block;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.5);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.logoloop__item:hover img {
+    filter: grayscale(0) opacity(1);
+    transform: scale(1.15);
+}
+
+/* --- Meteors Effect --- */
+.meteors-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.meteor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 2px;
+    width: 2px;
+    border-radius: 9999px;
+    background-color: #64748b;
+    box-shadow: 0 0 0 1px #ffffff10;
+    transform: rotate(215deg);
+    animation: meteor 5s linear infinite;
+    pointer-events: none;
+    opacity: 0;
+}
+
+body.dark-mode .meteor {
+    background-color: #94a3b8;
+}
+
+.meteor::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(to right, #64748b, transparent);
+}
+
+body.dark-mode .meteor::before {
+    background: linear-gradient(to right, #94a3b8, transparent);
+}
+
+@keyframes meteor {
+    0% {
+        transform: rotate(215deg) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: rotate(215deg) translateX(-500px);
+        opacity: 0;
+    }
+}
+
+/* --- Particles Effect --- */
+.particles-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.particles-container canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
