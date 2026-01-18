@@ -2888,3 +2888,52 @@ body.dark-mode .meteor::before {
     width: 100% !important;
     height: 100% !important;
 }
+
+/* Calendar Event Styling */
+.day.event-date {
+    background-color: rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    color: var(--text-color);
+    position: relative;
+    cursor: help;
+    border: 1px solid currentColor;
+}
+
+body.dark-mode .day.event-date {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Tooltip Styling */
+.day.event-date[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--inverse-bg);
+    color: var(--inverse-text);
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 100;
+    pointer-events: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-bottom: 8px;
+    border: 1px solid var(--text-color);
+}
+
+/* Tooltip Arrow */
+.day.event-date[data-tooltip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--inverse-bg) transparent transparent transparent;
+    margin-bottom: -2px;
+    /* Pull it down slightly to touch */
+    z-index: 100;
+}
