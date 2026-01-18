@@ -7,9 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Theme Toggle Logic (Global) ---
     const themeToggleBtn = document.getElementById('theme-toggle');
-    // Check localStorage
-    if (localStorage.getItem('theme') === 'dark') {
+
+    // Check localStorage (Default to Dark)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || !savedTheme) {
         document.body.classList.add('dark-mode');
+        // Ensure accurate state
+        localStorage.setItem('theme', 'dark');
     }
 
     if (themeToggleBtn) {
@@ -24,60 +28,65 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Smooth Cursor Logic ---
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorOutline = document.querySelector('.cursor-outline');
+    // --- ClickSpark Animation ---
+    class ClickSpark {
+        constructor() {
+            this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            this.svg.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;';
+            document.body.appendChild(this.svg);
+            document.addEventListener('click', (e) => this.createSparks(e));
+        }
 
-    if (cursorDot && cursorOutline && window.matchMedia("(pointer: fine)").matches) {
-        let cursorX = 0;
-        let cursorY = 0;
-        // Current position of outline (for lerping)
-        let outlineX = 0;
-        let outlineY = 0;
+        createSparks(e) {
+            const x = e.clientX;
+            const y = e.clientY;
+            const count = 8;
+            const sparkSize = 10;
+            const sparkRadius = 15;
+            const duration = 400;
+            const startTime = performance.now();
 
-        document.addEventListener('mousemove', (e) => {
-            cursorX = e.clientX;
-            cursorY = e.clientY;
+            const sparks = [];
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2;
+                const spark = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                spark.setAttribute('cx', x);
+                spark.setAttribute('cy', y);
+                spark.setAttribute('r', sparkSize / 2);
+                spark.setAttribute('fill', '#fff');
+                this.svg.appendChild(spark);
+                sparks.push({ el: spark, angle });
+            }
 
-            // Dot follows instantly
-            cursorDot.style.left = `${cursorX}px`;
-            cursorDot.style.top = `${cursorY}px`;
+            const animate = (time) => {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3); // Cubic ease out
 
-            // Show if hidden (e.g. on load)
-            cursorDot.style.opacity = 1;
-            cursorOutline.style.opacity = 1;
-        });
+                sparks.forEach(s => {
+                    const dist = sparkRadius * ease;
+                    const sX = x + Math.cos(s.angle) * dist;
+                    const sY = y + Math.sin(s.angle) * dist;
 
-        // Animation loop for smooth outline
-        const animateCursor = () => {
-            // Linear Interpolation (Lerp)
-            // Move 15% of the distance towards the target per frame
-            const speed = 0.15;
+                    s.el.setAttribute('cx', sX);
+                    s.el.setAttribute('cy', sY);
+                    s.el.setAttribute('opacity', 1 - progress);
+                });
 
-            outlineX += (cursorX - outlineX) * speed;
-            outlineY += (cursorY - outlineY) * speed;
-
-            cursorOutline.style.left = `${outlineX}px`;
-            cursorOutline.style.top = `${outlineY}px`;
-
-            requestAnimationFrame(animateCursor);
-        };
-
-        animateCursor();
-
-        // Add hover effect for clickable elements
-        const clickables = document.querySelectorAll('a, button, .folder-trigger, .theme-toggle-btn');
-        clickables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorOutline.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorOutline.style.backgroundColor = 'transparent';
-            });
-        });
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    sparks.forEach(s => s.el.remove());
+                }
+            };
+            requestAnimationFrame(animate);
+        }
     }
+    new ClickSpark();
+
+    // --- Smooth Cursor Logic Removed ---
+    // Replaced by ClickSpark
+
 
     // --- Text Animation Logic ---
     function initTextAnimations() {
@@ -534,94 +543,64 @@ document.addEventListener('DOMContentLoaded', () => {
             swapper.classList.toggle('swapped');
         });
     }
-    // --- Theme Toggle Logic ---
-    const themeToggle = document.getElementById('theme-toggle');
+    // Duplicate Theme Logic Removed
 
-    if (themeToggle) {
-        // Sync toggle with initial state
-        function syncToggleState() {
-            if (document.body.classList.contains('dark-mode')) {
-                themeToggle.checked = true;
-            } else {
-                themeToggle.checked = false;
-            }
-        }
 
-        // Initial sync
-        syncToggleState();
+    // --- Calendar Navigation Logic ---
+    const prevBtn = document.getElementById('cal-prev');
+    const nextBtn = document.getElementById('cal-next');
+    const calViews = ['view-dec-2025', 'view-jan-2026'];
+    let currentViewIndex = 0;
 
-        // Listen for manual toggle
-        themeToggle.addEventListener('change', () => {
-            if (themeToggle.checked) {
-                // Switching to Dark & Set Global Override
-                document.body.classList.add('dark-mode');
-                document.body.setAttribute('data-theme-override', 'dark');
-            } else {
-                // Switching to Light & Set Global Override
-                document.body.classList.remove('dark-mode');
-                document.body.setAttribute('data-theme-override', 'light');
+    function updateCalendarView() {
+        // Hide all
+        calViews.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('active');
+                el.style.display = 'none';
             }
         });
 
-        // Add an observer to body class to keep toggle in sync
-        const observer = new MutationObserver(() => {
-            syncToggleState();
-        });
-        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        // Show current
+        const currentId = calViews[currentViewIndex];
+        // Ensure index is valid
+        if (!currentId) return;
 
-        // --- Calendar Navigation Logic ---
-        const prevBtn = document.getElementById('cal-prev');
-        const nextBtn = document.getElementById('cal-next');
-        const calViews = ['view-dec-2025', 'view-jan-2026'];
-        let currentViewIndex = 0;
-
-        function updateCalendarView() {
-            // Hide all
-            calViews.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.classList.remove('active');
-                    el.style.display = 'none';
-                }
-            });
-
-            // Show current
-            const currentId = calViews[currentViewIndex];
-            // Ensure index is valid
-            if (!currentId) return;
-
-            const currentEl = document.getElementById(currentId);
-            if (currentEl) {
-                currentEl.style.display = 'block';
-                setTimeout(() => currentEl.classList.add('active'), 10);
-            }
-
-            // Update Buttons
-            if (prevBtn) prevBtn.disabled = currentViewIndex === 0;
-            if (nextBtn) nextBtn.disabled = currentViewIndex === calViews.length - 1;
+        const currentEl = document.getElementById(currentId);
+        if (currentEl) {
+            currentEl.style.display = 'block';
+            setTimeout(() => currentEl.classList.add('active'), 10);
         }
 
-        if (prevBtn && nextBtn) {
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent folder from closing
-                if (currentViewIndex > 0) {
-                    currentViewIndex--;
-                    updateCalendarView();
-                }
-            });
-
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent folder from closing
-                if (currentViewIndex < calViews.length - 1) {
-                    currentViewIndex++;
-                    updateCalendarView();
-                }
-            });
-
-            // Initial state
-            updateCalendarView();
-        }
+        // Update Buttons
+        if (prevBtn) prevBtn.disabled = currentViewIndex === 0;
+        if (nextBtn) nextBtn.disabled = currentViewIndex === calViews.length - 1;
     }
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent folder from closing
+            if (currentViewIndex > 0) {
+                currentViewIndex--;
+                updateCalendarView();
+            }
+        });
+
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent folder from closing
+            if (currentViewIndex < calViews.length - 1) {
+                currentViewIndex++;
+                updateCalendarView();
+            }
+        });
+
+        // Initial state
+        updateCalendarView();
+    }
+    // End of Calendar Logic
+
+
 
     // --- HyperText Animation ---
     class HyperText {
@@ -669,6 +648,77 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize HyperText
     document.querySelectorAll('.hyper-text').forEach(el => new HyperText(el));
 });
+
+
+// --- Volume Control Logic ---
+const volumeRange = document.querySelector(".volume input[type=range]");
+const barHoverBox = document.querySelector(".volume .bar-hoverbox");
+const volumeFill = document.querySelector(".volume .bar .bar-fill");
+
+if (volumeRange && barHoverBox && volumeFill) {
+    const setVolumeValue = (value) => {
+        volumeFill.style.width = value + "%";
+        volumeRange.setAttribute("value", value);
+        volumeRange.value = value;
+
+        if (player && typeof player.setVolume === 'function') {
+            player.setVolume(value);
+        }
+    }
+
+    // Default
+    setVolumeValue(volumeRange.value);
+
+    const calculateFill = (e) => {
+        let clientX = e.clientX;
+        if (e.type === 'touchmove' || e.type === 'touchstart') {
+            clientX = e.touches[0].clientX;
+        }
+
+        // Handle case where sidebar/scrolling affects coordinates
+        const rect = barHoverBox.getBoundingClientRect();
+        const bar = barHoverBox.querySelector('.bar');
+        // We want interaction on the hoverBox (larger), but mapping to the bar's width?
+        // Prompt says: (e.offsetX - 15) / (width - 30) * 100.
+        // We'll map relative to the bar container for simplicity and robustness
+
+        let x = clientX - rect.left;
+        let width = rect.width;
+
+        // Clamp
+        let percentage = (x / width) * 100;
+        percentage = Math.max(0, Math.min(100, percentage));
+
+        setVolumeValue(percentage);
+    }
+
+    let barStillDown = false;
+
+    const handleStart = (e) => {
+        barStillDown = true;
+        calculateFill(e);
+    };
+
+    const handleMove = (e) => {
+        if (barStillDown) {
+            // Prevent scrolling on touch
+            if (e.type === 'touchmove') e.preventDefault();
+            calculateFill(e);
+        }
+    };
+
+    const handleEnd = () => {
+        barStillDown = false;
+    };
+
+    barHoverBox.addEventListener("mousedown", handleStart);
+    barHoverBox.addEventListener("mousemove", handleMove);
+    document.addEventListener("mouseup", handleEnd);
+
+    barHoverBox.addEventListener("touchstart", handleStart, { passive: false });
+    barHoverBox.addEventListener("touchmove", handleMove, { passive: false });
+    document.addEventListener("touchend", handleEnd);
+}
 
 
 // --- Magic Bento Grid Logic (GSAP) ---

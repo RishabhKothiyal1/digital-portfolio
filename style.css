@@ -2147,57 +2147,72 @@ body.dark-mode .moon-icon {
     opacity: 1;
 }
 
-/* --- Smooth Cursor --- */
-.cursor-dot,
-.cursor-outline {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    z-index: 2147483647;
-    /* Max Z-Index */
-    pointer-events: none;
+/* --- Smooth Cursor Removed --- */
+/* Default cursor restored */
+body {
+    cursor: auto;
+}
+
+/* --- Volume Control (Footer) --- */
+.volume {
+    display: flex;
+    align-items: center;
+    width: 100px;
+    margin: 0 0 0 1rem;
+}
+
+.volume input[type=range] {
     display: none;
-    /* Hidden by default (shown via JS/Media Query) */
 }
 
-.cursor-dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--text-color);
+.volume .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    color: var(--text-color);
 }
 
-.cursor-outline {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--text-color);
-    opacity: 0.5;
-    transition: width 0.2s, height 0.2s, background-color 0.2s;
+.volume .icon-size {
+    width: 18px;
+    height: 18px;
 }
 
-/* Show cursor only on devices with fine pointers (mouse) */
-@media (hover: hover) and (pointer: fine) {
-    body {
-        cursor: none;
-        /* Hide default cursor */
-    }
-
-    .cursor-dot,
-    .cursor-outline {
-        display: block;
-    }
-
-    /* Ensure links/buttons explicitly show pointer state if needed,
-       but since we hide default cursor, we usually rely on custom cursor
-       expanding or changing color. For simplicity, we just keep custom cursor. */
+.volume .bar-hoverbox {
+    padding: 10px 0;
+    opacity: 0.7;
+    transition: opacity .2s;
+    cursor: pointer;
+    flex-grow: 1;
+    position: relative;
+    height: 30px;
+    display: flex;
+    align-items: center;
 }
 
-/* --- Highlighted Visual Content (Resume) --- */
-/* Ensure high contrast for key info in both modes */
-.resume-company,
-.resume-date,
-.hobbies-list-grid span,
+.volume .bar-hoverbox:hover {
+    opacity: 1;
+}
+
+.volume .bar {
+    background: rgba(128, 128, 128, 0.3);
+    height: 4px;
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    pointer-events: none;
+    position: relative;
+}
+
+.volume .bar .bar-fill {
+    background: var(--text-color);
+    width: 50%;
+    height: 100%;
+    border-radius: 15px;
+    pointer-events: none;
+    transition: width 0.1s ease-out;
+}
+
 .contact-link {
     color: var(--text-color) !important;
     opacity: 1 !important;
