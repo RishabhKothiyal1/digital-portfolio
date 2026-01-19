@@ -2045,6 +2045,89 @@ a.folder-wrapper.direct-link .folder-trigger {
         padding: 15px;
         position: fixed;
         top: 50%;
+        z-index: 1002;
+    }
+
+    /* --- Page 1: Cover Mobile Fixes --- */
+    #slide-cover {
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding-top: 0 !important;
+    }
+
+    #slide-cover .content {
+        align-items: center !important;
+        text-align: center !important;
+        margin-top: 0 !important;
+    }
+
+    #slide-cover h1 {
+        font-size: 15vw !important;
+        /* Responsive scaling */
+        margin-bottom: 0.5rem;
+    }
+
+    .cover-header {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        margin-bottom: 2rem;
+        width: 100%;
+        justify-content: center !important;
+        height: auto !important;
+    }
+
+    .cover-year {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    /* --- Page 2: Index Mobile Fixes --- */
+    .index-list li {
+        font-size: 2.5rem !important;
+        /* Manageable size */
+        margin-bottom: 1rem;
+        text-align: left;
+        /* Keep index aligned left for structure? or center? User said "Fix". Standard is usually left. */
+    }
+
+    /* --- Page 5: Certifications Mobile Fixes --- */
+    .certs-container {
+        justify-content: center !important;
+        /* Center folders grid */
+        gap: 1.5rem !important;
+    }
+
+    .folder-wrapper {
+        width: 40% !important;
+        /* 2 per row approx */
+        min-width: 100px;
+    }
+
+    /* --- Page 7: Events Mobile Fixes --- */
+    .calendar-layout {
+        flex-direction: column !important;
+        gap: 2rem !important;
+    }
+
+    .calendar-grid {
+        min-width: unset !important;
+        width: 100% !important;
+    }
+
+    .globe-container {
+        width: 100% !important;
+        height: 100vw !important;
+        /* Square based on width */
+        opacity: 0.3 !important;
+        /* Fade it more so text is readable */
+    }
+
+    .events-list {
+        min-width: unset !important;
+        width: 100% !important;
     }
 }
 
