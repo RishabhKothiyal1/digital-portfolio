@@ -1924,6 +1924,32 @@ a.folder-wrapper.direct-link .folder-trigger {
         /* Force Left */
         gap: 1.5rem;
         width: 100% !important;
+        margin-top: 1rem;
+    }
+
+    /* Fix Image Overlap: Reset absolute positioning */
+    .image-swapper {
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        position: relative !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .p-img.main-img {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 250px !important;
+        max-width: 80% !important;
+        height: auto !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .p-img.sec-img {
+        display: none !important;
     }
 
     .intro-image-col {
@@ -1951,15 +1977,23 @@ a.folder-wrapper.direct-link .folder-trigger {
     /* 3. Grids - Force Full Width */
     .resume-grid,
     .projects-grid,
-    .hobbies-list-grid {
+    .hobbies-list-grid,
+    .card-grid {
         display: flex !important;
         flex-direction: column !important;
-        gap: 2rem;
+        gap: 1.5rem;
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        align-items: flex-start !important;
-        /* Force items left */
+        align-items: stretch !important;
+        /* Force items to fill width */
+    }
+
+    /* Reset spacing for stacked cards */
+    .magic-bento-card {
+        min-height: auto !important;
+        height: auto !important;
+        /* Allow content to decide height */
     }
 
     /* 4. Navigation */
@@ -1972,17 +2006,20 @@ a.folder-wrapper.direct-link .folder-trigger {
 
     /* 5. Typography */
     .content h1 {
-        font-size: 2rem !important;
+        font-size: 3rem !important;
+        /* Increased from 2rem */
         text-align: left !important;
         width: 100%;
         margin: 0 0 1rem 0 !important;
+        line-height: 1.1;
     }
 
     h2 {
-        font-size: 1.5rem !important;
+        font-size: 2rem !important;
+        /* Increased from 1.5rem */
         text-align: left !important;
         width: 100%;
-        margin: 0 0 1rem 0 !important;
+        margin: 0 0 1.5rem 0 !important;
     }
 
     p {

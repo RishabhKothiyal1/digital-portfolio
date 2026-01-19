@@ -550,7 +550,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('cal-prev');
     const nextBtn = document.getElementById('cal-next');
     const calViews = ['view-dec-2025', 'view-jan-2026'];
+
+    // Auto-select based on current date
+    const now = new Date();
+    // Default to Dec 2025 (Index 0)
     let currentViewIndex = 0;
+
+    // If it's Jan 2026 or later, show Jan 2026 (Index 1)
+    if (now.getFullYear() > 2025 || (now.getFullYear() === 2026 && now.getMonth() >= 0)) {
+        currentViewIndex = 1;
+    }
 
     function updateCalendarView() {
         // Hide all
