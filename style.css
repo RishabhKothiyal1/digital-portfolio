@@ -3539,3 +3539,98 @@ body.dark-mode .day.event-date {
     }
 
 }
+
+/* ============================
+   HERO – MOBILE FIX (FINAL)
+   ============================ */
+
+@media (max-width: 768px) {
+
+    .hero,
+    #slide-cover {
+        /* Adapted selector */
+        min-height: 100vh !important;
+        width: 100% !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+
+        text-align: center !important;
+        padding: 2rem 1.5rem !important;
+        margin: 0 !important;
+    }
+
+    /* PORTFOLIO TITLE */
+    .hero h1,
+    #slide-cover h1 {
+        font-size: 3.2rem !important;
+        font-weight: 700;
+        margin-bottom: 0.75rem !important;
+    }
+
+    /* TAGLINE */
+    .hero p,
+    .subtitle {
+        /* Adapted selector */
+        font-size: 1.05rem;
+        max-width: 90%;
+        opacity: 0.85;
+        margin-bottom: 1rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    /* NAME */
+    .hero h2,
+    .author-name {
+        /* Adapted selector */
+        font-size: 1.4rem;
+        font-weight: 600;
+        /* Preserve visual hierarchy */
+        margin-bottom: 1.5rem !important;
+        order: 2;
+        /* Ensure order if flex column messes it up */
+    }
+
+    /* Override any specific author-name absolute positioning if it existed */
+    #slide-cover .author-name {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        transform: none !important;
+        text-align: center !important;
+    }
+
+    /* SCROLL ICON */
+    .scroll-indicator,
+    .cover-arrow-container {
+        position: relative !important;
+        margin-top: 0.5rem !important;
+        font-size: 1.6rem;
+        opacity: 0.8;
+        bottom: auto !important;
+        right: auto !important;
+        left: auto !important;
+        transform: none !important;
+    }
+
+    /* Reset "Breakers" */
+    #slide-cover * {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+    }
+
+    /* Re-enable circle arrow specific styling inside the relative container */
+    .circle-arrow {
+        margin: 0 auto;
+        /* Center it */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+}
