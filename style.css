@@ -3428,3 +3428,114 @@ body.dark-mode .day.event-date {
         min-height: 200px;
     }
 }
+
+/* ============================
+   MOBILE OVERRIDE – FINAL
+   ============================ */
+
+@media (max-width: 768px) {
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    section {
+        min-height: auto !important;
+        height: auto !important;
+        padding: 3rem 1.5rem !important;
+        margin: 0 !important;
+    }
+
+    /* HERO FIX */
+    .hero,
+    .landing,
+    .home,
+    #slide-cover {
+        /* Added #slide-cover explicit ID selector match */
+        min-height: 100vh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    .hero h1,
+    #slide-cover h1 {
+        font-size: 3rem !important;
+    }
+
+    .hero h2,
+    .hero p,
+    #slide-cover h2,
+    #slide-cover p,
+    .subtitle {
+        max-width: 90%;
+        font-size: 1.1rem;
+    }
+
+    /* SCROLL ICON */
+    .scroll-indicator,
+    .cover-arrow-container {
+        position: relative !important;
+        margin-top: 1.5rem;
+        bottom: auto !important;
+        /* Override absolute bottom */
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+    }
+
+    /* IMAGE FIX */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        position: relative !important;
+    }
+
+    /* REMOVE ABSOLUTE LAYOUTS */
+    .absolute,
+    [style*="absolute"] {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+    }
+
+    /* Retain slide absolute positioning generally but allow flow inside */
+    .slide {
+        position: absolute !important;
+        /* Keep slide mechanism */
+        overflow-y: auto !important;
+        /* Allow scrolling content if it exceeds viewport */
+    }
+
+    /* PROJECTS */
+    .project-card,
+    .magic-bento-card {
+        width: 100% !important;
+        margin: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* CERTIFICATIONS */
+    .folder-grid,
+    .certs-container {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+
+    .folder-wrapper {
+        width: 100% !important;
+        /* Grid handles width */
+        margin: 0 !important;
+    }
+
+}
