@@ -104,7 +104,6 @@
                 align-items: center !important;
                 padding: 3rem 1.5rem !important;
                 height: auto !important;
-                /* Allow growing */
                 overflow-y: auto !important;
             }
 
@@ -118,7 +117,6 @@
                 width: 240px !important;
                 height: 240px !important;
                 order: 1 !important;
-                /* Image First */
                 margin-bottom: 2rem !important;
                 position: relative !important;
                 top: auto !important;
@@ -134,7 +132,6 @@
                 height: 100% !important;
                 object-fit: cover !important;
                 border-radius: 50% !important;
-                /* Circular or Rounded */
                 position: relative !important;
                 display: block !important;
             }
@@ -146,13 +143,77 @@
 
             .intro-text-col {
                 order: 2 !important;
-                /* Text Second */
                 width: 100% !important;
                 text-align: center !important;
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
                 transform: none !important;
+            }
+
+            /* --- OVERVIEW (BENTO) FIX --- */
+            #slide-resume,
+            #bento-grid {
+                height: auto !important;
+                overflow-y: auto !important;
+                display: block !important;
+                /* Reset grid */
+            }
+
+            .bento-section {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1.5rem !important;
+                padding-bottom: 4rem !important;
+            }
+
+            .magic-bento-card {
+                width: 100% !important;
+                min-height: auto !important;
+                height: auto !important;
+                grid-row: auto !important;
+                /* Reset spans */
+                grid-column: auto !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* --- EVENTS FIX --- */
+            #slide-events {
+                height: auto !important;
+                overflow-y: auto !important;
+            }
+
+            .globe-container {
+                width: 100% !important;
+                height: 250px !important;
+                /* Constrain height */
+                overflow: hidden !important;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                margin-bottom: 1rem !important;
+            }
+
+            #globe-canvas {
+                width: 250px !important;
+                height: 250px !important;
+                max-width: 90vw !important;
+            }
+
+            /* Calendar Modal Fix */
+            .folder-content {
+                width: 95vw !important;
+                height: 85vh !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                position: fixed !important;
+                overflow-y: auto !important;
+            }
+
+            .calendar-layout {
+                flex-direction: column !important;
+                gap: 1.5rem !important;
             }
 
             /* RESET ALL ABSOLUTE POSITIONING ON MOBILE SECTIONS */
