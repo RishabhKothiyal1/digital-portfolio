@@ -119,21 +119,29 @@
                 height: 240px !important;
                 order: 1 !important;
                 /* Image First */
-                margin-bottom: 1rem !important;
+                margin-bottom: 2rem !important;
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
                 transform: none !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
             }
 
-            .p-img,
-            .image-swapper img {
+            .p-img.main-img,
+            .image-swapper img:first-child {
                 width: 100% !important;
                 height: 100% !important;
+                object-fit: cover !important;
+                border-radius: 50% !important;
+                /* Circular or Rounded */
                 position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                transform: none !important;
+                display: block !important;
+            }
+
+            .p-img.sec-img,
+            .image-swapper img:nth-child(2) {
+                display: none !important;
             }
 
             .intro-text-col {
@@ -157,7 +165,7 @@
     </style>
 </head>
 
-<body style="border: 5px solid red !important;">
+<body>
     <div id="app">
         <main class="slides-container">
             <!-- Slide 1: Cover -->
