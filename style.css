@@ -3634,3 +3634,89 @@ body.dark-mode .day.event-date {
     }
 
 }
+
+/* ============================
+   INTRO – MOBILE FIX (NO OVERLAP)
+   ============================ */
+
+@media (max-width: 768px) {
+
+    .intro-content,
+    #slide-intro .content {
+        /* Adapted selector */
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+
+        gap: 1.5rem;
+        padding: 3rem 1.5rem !important;
+        margin: 0 !important;
+    }
+
+    /* IMAGE */
+    .intro-image-col,
+    .image-swapper {
+        /* Adapted selector */
+        position: relative !important;
+        width: 100% !important;
+        max-width: 280px;
+        margin: 0 auto !important;
+        height: auto !important;
+        /* Ensure generic constraint from previous block doesn't break aspect */
+    }
+
+    .intro-image-col img,
+    .p-img,
+    .image-swapper img {
+        /* Adapted selector */
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 12px;
+        position: relative !important;
+        /* Fix stacking */
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+    }
+
+    /* Disable swapper offset logic for mobile simplicity if needed, or keep it if it fits */
+    .p-img.sec-img {
+        display: none !important;
+        /* Hide secondary image on mobile to simplify stack */
+    }
+
+    /* TEXT */
+    .intro-text-col,
+    .intro-text {
+        /* Adapted selector */
+        position: relative !important;
+        width: 100% !important;
+        text-align: center !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+    }
+
+    .intro-text p {
+        margin-bottom: 0 !important;
+    }
+
+    /* Remove fake spacing */
+    #slide-intro * {
+        margin-top: 0 !important;
+        /* Reset generic margins if they interfere, be careful with paragraph spacing though */
+    }
+
+    /* Restore paragraph spacing specifically */
+    #slide-intro p {
+        margin-bottom: 1rem !important;
+    }
+
+    /* Contact links container */
+    .intro-text-col>div {
+        margin-top: 2rem !important;
+        /* Restore space above links */
+        justify-content: center !important;
+    }
+
+}
