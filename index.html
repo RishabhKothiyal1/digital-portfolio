@@ -16,6 +16,145 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css?v=intro-fix-1">
+
+    <!-- CRITICAL MOBILE OVERRIDES (INLINE TO FORCE UPDATE) -->
+    <style>
+        @media (max-width: 768px) {
+
+            html,
+            body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            * {
+                box-sizing: border-box !important;
+            }
+
+            /* --- HERO FIX --- */
+            #slide-cover,
+            .hero {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                text-align: center !important;
+                min-height: 100vh !important;
+                width: 100% !important;
+                padding: 2rem 1rem !important;
+                margin: 0 !important;
+                position: relative !important;
+                top: 0 !important;
+                left: 0 !important;
+                transform: none !important;
+            }
+
+            #slide-cover .content {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                width: 100% !important;
+                margin-top: 0 !important;
+            }
+
+            #slide-cover h1 {
+                font-size: 3rem !important;
+                margin-bottom: 0.5rem !important;
+                line-height: 1.1 !important;
+            }
+
+            #slide-cover p,
+            .subtitle {
+                font-size: 1rem !important;
+                max-width: 90% !important;
+                opacity: 0.9 !important;
+                margin-bottom: 1rem !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
+            .author-name {
+                font-size: 1.2rem !important;
+                margin-bottom: 2rem !important;
+                order: 3 !important;
+                position: relative !important;
+                bottom: auto !important;
+            }
+
+            .cover-arrow-container {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                right: auto !important;
+                transform: none !important;
+                margin-top: 1rem !important;
+                order: 4 !important;
+            }
+
+            /* --- INTRO FIX --- */
+            #slide-intro,
+            .intro-content {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                padding: 3rem 1.5rem !important;
+                height: auto !important;
+                /* Allow growing */
+                overflow-y: auto !important;
+            }
+
+            .intro-content {
+                margin-top: 0 !important;
+                gap: 2rem !important;
+            }
+
+            .intro-image-col,
+            .image-swapper {
+                width: 240px !important;
+                height: 240px !important;
+                order: 1 !important;
+                /* Image First */
+                margin-bottom: 1rem !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+            }
+
+            .p-img,
+            .image-swapper img {
+                width: 100% !important;
+                height: 100% !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+            }
+
+            .intro-text-col {
+                order: 2 !important;
+                /* Text Second */
+                width: 100% !important;
+                text-align: center !important;
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+            }
+
+            /* RESET ALL ABSOLUTE POSITIONING ON MOBILE SECTIONS */
+            .slide {
+                height: 100svh !important;
+                padding-top: 4rem !important;
+                /* Space for top header if any */
+            }
+        }
+    </style>
 </head>
 
 <body>
