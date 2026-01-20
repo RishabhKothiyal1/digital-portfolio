@@ -163,7 +163,8 @@
             .bento-section {
                 display: flex !important;
                 flex-direction: column !important;
-                gap: 1.5rem !important;
+                gap: 0.8rem !important;
+                /* Reduced Gap */
                 padding-bottom: 4rem !important;
             }
 
@@ -174,7 +175,16 @@
                 grid-row: auto !important;
                 /* Reset spans */
                 grid-column: auto !important;
-                margin-bottom: 1rem !important;
+                margin-bottom: 0 !important;
+            }
+
+            /* Fix Images in Overview (Logos) */
+            .magic-bento-card img {
+                height: 40px !important;
+                /* Ensure visible size */
+                width: auto !important;
+                max-width: 60px !important;
+                object-fit: contain !important;
             }
 
             /* --- EVENTS FIX --- */
