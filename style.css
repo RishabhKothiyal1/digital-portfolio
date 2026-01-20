@@ -3075,3 +3075,356 @@ body.dark-mode .day.event-date {
     /* Pull it down slightly to touch */
     z-index: 100;
 }
+
+/* =========================================
+   MOBILE OPTIMIZATION (Max-Width: 768px)
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* --- Global Resets & Adjustments --- */
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Adjust Global Typography for Mobile */
+    h1 {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    h2 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        margin-bottom: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    /* --- Slide Container Adjustments --- */
+    .slide {
+        padding: 4rem 1.5rem;
+        /* Reduced side padding */
+        height: 100svh;
+        /* Better mobile height */
+    }
+
+    /* --- Slide 1: Hero / Landing Section --- */
+    #slide-cover .content {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100%;
+    }
+
+    #slide-cover h1 {
+        font-size: clamp(3rem, 15vw, 5rem);
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
+    }
+
+    #slide-cover .subtitle {
+        font-size: 0.9rem;
+        max-width: 100%;
+        margin-top: 1rem;
+        padding: 0 1rem;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .author-name {
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        order: 2;
+        text-align: center;
+    }
+
+    /* Cover Header (Year) */
+    .cover-header {
+        top: 1rem;
+        left: 1.5rem;
+        right: 1.5rem;
+        height: auto;
+    }
+
+    .cover-year {
+        font-size: 0.9rem;
+    }
+
+    /* Scroll Indicator */
+    .cover-arrow-container {
+        bottom: 1.5rem;
+    }
+
+    .circle-arrow {
+        width: 50px;
+        height: 50px;
+    }
+
+    .circle-arrow svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* --- Navigation Elements --- */
+    .navigation {
+        right: 1rem;
+        bottom: 1rem;
+        gap: 0.5rem;
+    }
+
+    .navigation button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .theme-toggle-wrapper {
+        top: 1rem;
+        right: 1rem;
+    }
+
+    /* --- Slide 2: Index --- */
+    .index-list li {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    /* --- Slide 3: Introduction --- */
+    #slide-intro .intro-content {
+        flex-direction: column-reverse;
+        gap: 2rem;
+        padding-top: 0;
+        text-align: center;
+        width: 100%;
+    }
+
+    .intro-text-col {
+        text-align: center;
+        width: 100%;
+    }
+
+    #slide-intro .intro-text {
+        font-size: 1rem;
+        line-height: 1.6;
+        padding: 0 0.5rem;
+    }
+
+    .image-swapper {
+        width: 240px;
+        height: 240px;
+        margin: 0 auto;
+    }
+
+    .p-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Links container - center them */
+    #slide-intro .intro-text-col>div {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    /* --- Slide 4: Overview (Bento) --- */
+    #slide-resume .content {
+        padding-top: 3rem;
+        /* Ensure header doesn't overlap */
+    }
+
+    #bento-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-bottom: 5rem;
+        /* Space for scroll/nav */
+        width: 100%;
+    }
+
+    .magic-bento-card {
+        width: 100%;
+        min-height: auto;
+    }
+
+    /* Adjust specific card heights if needed */
+    .magic-bento-card[style*="grid-row: span 2"] {
+        height: auto !important;
+        /* Let them grow naturally */
+    }
+
+    .magic-bento-card__content {
+        padding: 1rem 0;
+        /* Add internal spacing */
+    }
+
+    .logoloop {
+        margin: 2rem 0;
+        width: 100%;
+    }
+
+    /* --- Slide 5: Certifications --- */
+    #slide-certs .content {
+        width: 100%;
+        padding-top: 2rem;
+    }
+
+    .certs-container {
+        justify-content: space-between;
+        /* push to edges or evenly */
+        gap: 1rem;
+        padding-bottom: 5rem;
+    }
+
+    .folder-wrapper {
+        width: 47%;
+        /* 2 items per row with small gap */
+        margin-bottom: 1.5rem;
+    }
+
+    .folder-trigger {
+        transform: scale(0.9);
+    }
+
+    .folder-label {
+        font-size: 0.8rem;
+    }
+
+    /* Modal Mobile */
+    .folder-content {
+        width: 95vw;
+        height: 80vh;
+        padding: 1.5rem 1rem;
+        top: 55%;
+        /* Offset slightly due to address bar maybe */
+    }
+
+    .folder-tab {
+        font-size: 1rem;
+        top: -30px;
+        height: 32px;
+        padding: 0 1rem;
+    }
+
+    .folder-list li a {
+        font-size: 0.95rem;
+    }
+
+    /* --- Slide 6: Projects --- */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding-bottom: 6rem;
+        /* Extra space for bottom nav */
+    }
+
+    .project-card {
+        min-height: auto;
+        margin-bottom: 0.5rem;
+    }
+
+    /* --- Slide 7: Events --- */
+    #slide-events .content {
+        padding-top: 2rem;
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+
+    .globe-container {
+        width: 100%;
+        height: 250px;
+        /* Reduced fixed height for mobile */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        margin-top: 3rem;
+    }
+
+    #globe-canvas {
+        width: 250px !important;
+        height: 250px !important;
+        max-width: 80vw;
+    }
+
+    /* Adjust modal for calendar if it's inside folder-content (it is) */
+    .calendar-container {
+        padding: 0.5rem;
+        background: transparent;
+        border: none;
+    }
+
+    .calendar-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .calendar-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .calendar-grid {
+        min-width: 100%;
+        gap: 2px;
+    }
+
+    .day {
+        font-size: 0.8rem;
+        border-radius: 4px;
+    }
+
+    .events-list {
+        margin-top: 1rem;
+    }
+
+    /* --- Slide 8: Hobbies --- */
+    #slide-hobbies .content {
+        padding-top: 3rem;
+    }
+
+    .hobbies-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 2rem;
+        padding-bottom: 6rem;
+    }
+
+    .music-folder-wrapper {
+        width: 80%;
+        /* Wider than other folders */
+    }
+
+    /* Cassette Player Responsive */
+    .cassette-player-container {
+        flex-direction: column;
+        height: auto;
+        gap: 1.5rem;
+        margin-top: 0;
+    }
+
+    .cassette {
+        width: 100%;
+        border-width: 2px;
+    }
+
+    .lyrics-panel {
+        width: 100%;
+        min-height: 200px;
+    }
+}
