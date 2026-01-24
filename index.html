@@ -16,6 +16,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css?v=intro-fix-1">
+    <link rel="stylesheet" href="bat.css">
 
     <!-- CRITICAL MOBILE OVERRIDES (INLINE TO FORCE UPDATE) -->
     <style>
@@ -112,6 +113,7 @@
                 gap: 2rem !important;
             }
 
+
             .intro-image-col,
             .image-swapper {
                 width: 240px !important;
@@ -126,20 +128,23 @@
                 margin-right: auto !important;
             }
 
+            /* Keep both images visible on mobile and desktop */
             .p-img.main-img,
             .image-swapper img:first-child {
                 width: 100% !important;
                 height: 100% !important;
                 object-fit: cover !important;
-                border-radius: 50% !important;
+                border-radius: 20px !important;
                 position: relative !important;
                 display: block !important;
             }
 
             .p-img.sec-img,
             .image-swapper img:nth-child(2) {
-                display: none !important;
+                /* Keep second image visible on all screen sizes */
+                border-radius: 20px !important;
             }
+
 
             .intro-text-col {
                 order: 2 !important;
@@ -1087,7 +1092,11 @@
                                                     <span class="event-date-badge">13 Dec</span>
                                                     <div class="event-info">
                                                         <h4>GDG Cloud Delhi AI Manthan Summit</h4>
-                                                        <p>Attended at Google Office</p>
+                                                        <p>Attended at Google Office <a
+                                                                href="https://www.linkedin.com/posts/rishabhkothiyal_gdg-googledevelopers-gdgcloud-activity-7419369483410096128-ikG1?utm_source=share&utm_medium=member_desktop&rcm=ACoAADaZCpcBTomGbrDBr505-tc_Ku7J_j57pp8"
+                                                                target="_blank"
+                                                                style="color: inherit; text-decoration: underline; opacity: 0.8;">(View
+                                                                Post)</a></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1155,7 +1164,11 @@
                                                 <span class="event-date-badge">10 Jan</span>
                                                 <div class="event-info">
                                                     <h4>Beyond the Browser: Angular Meets Generative AI</h4>
-                                                    <p>Tech Talk / Workshop</p>
+                                                    <p>Tech Talk / Workshop <a
+                                                            href="https://www.linkedin.com/posts/rishabhkothiyal_beyond-the-browser-angular-meets-generative-activity-7419358099171528704-TyhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAADaZCpcBTomGbrDBr505-tc_Ku7J_j57pp8"
+                                                            target="_blank"
+                                                            style="color: inherit; text-decoration: underline; opacity: 0.8;">(View
+                                                            Post)</a></p>
                                                 </div>
                                             </div>
                                             <div class="event-item">
@@ -1366,6 +1379,11 @@
             </svg>
         </div>
     </button>
+
+    <!-- Bat Animation -->
+    <div class="bat-container">
+        <div class="bat"></div>
+    </div>
     <!-- Custom Cursor Elements -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>

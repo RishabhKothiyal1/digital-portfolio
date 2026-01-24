@@ -1509,31 +1509,83 @@ body.dark-mode {
     flex-direction: column;
 }
 
-/* Theme Toggle Switch */
+/* Theme Toggle Switch - Moved to Left Corner */
 .theme-toggle-wrapper {
     position: fixed;
-    top: 6rem;
-    /* Moved down from 2rem to avoid 2026 text */
+    top: 2rem;
+    left: 2rem;
+    z-index: 9999;
+}
+
+.theme-toggle-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: fixed;
+    top: 2rem;
     right: 2rem;
     z-index: 9999;
 }
 
-#theme-toggle {
-    display: none;
+.theme-toggle-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
 }
 
-.theme-toggle-label {
-    width: 60px;
-    height: 30px;
-    background-color: #333;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px;
+body.dark-mode .theme-toggle-btn {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-icons {
     position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 24px;
+    height: 24px;
+}
+
+.sun-icon,
+.moon-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sun-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.moon-icon {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+body.dark-mode .sun-icon {
+    opacity: 0;
+    transform: rotate(180deg);
+}
+
+body.dark-mode .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+/* Bat Animation Container */
+.bat-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
 }
 
 /* Calendar UI Styles */
@@ -2278,17 +2330,9 @@ body.dark-mode .sun-icon {
     opacity: 0;
 }
 
-
-
 body.dark-mode .moon-icon {
     transform: rotate(0deg) scale(1);
     opacity: 1;
-}
-
-/* --- Smooth Cursor Removed --- */
-/* Default cursor restored */
-body {
-    cursor: auto;
 }
 
 /* --- Volume Control (Footer) --- */
@@ -3719,4 +3763,15 @@ body.dark-mode .day.event-date {
         justify-content: center !important;
     }
 
+}
+
+/* Bat Animation Container - Top Left Corner */
+.bat-container {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 9999;
+    pointer-events: none;
+    transform: scale(0.2);
+    transform-origin: top left;
 }
