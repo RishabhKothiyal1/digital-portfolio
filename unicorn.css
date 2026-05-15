@@ -1,0 +1,301 @@
+/* Unicorn Studio & Technical UI Styles */
+
+/* Variables */
+:root {
+    --us-border-color: rgba(255, 255, 255, 0.2);
+    --us-text-dim: rgba(255, 255, 255, 0.6);
+    --us-font-mono: 'Courier New', monospace;
+}
+
+/* Base Utility Classes Ported */
+.us-relative {
+    position: relative;
+}
+
+.us-absolute {
+    position: absolute;
+}
+
+.us-inset-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.us-w-full {
+    width: 100%;
+}
+
+.us-h-full {
+    height: 100%;
+}
+
+.us-z-0 {
+    z-index: 0;
+}
+
+.us-z-10 {
+    z-index: 10;
+}
+
+.us-z-20 {
+    z-index: 20;
+}
+
+.us-hidden {
+    display: none;
+}
+
+.us-block {
+    display: block;
+}
+
+.us-flex {
+    display: flex;
+}
+
+.us-items-center {
+    align-items: center;
+}
+
+.us-justify-between {
+    justify-content: space-between;
+}
+
+.us-gap-2 {
+    gap: 0.5rem;
+}
+
+.us-gap-4 {
+    gap: 1rem;
+}
+
+.us-font-mono {
+    font-family: var(--us-font-mono);
+}
+
+.us-text-white {
+    color: white;
+}
+
+.us-text-dim {
+    color: var(--us-text-dim);
+}
+
+.us-border-b {
+    border-bottom: 1px solid var(--us-border-color);
+}
+
+.us-border-t {
+    border-top: 1px solid var(--us-border-color);
+}
+
+/* Responsive adjustments (LG breakpoint approx) */
+@media (min-width: 1024px) {
+    .lg\:us-block {
+        display: block;
+    }
+
+    .lg\:us-hidden {
+        display: none;
+    }
+
+    .lg\:us-flex {
+        display: flex;
+    }
+
+    .lg\:us-gap-4 {
+        gap: 1rem;
+    }
+}
+
+/* Specific Component Styles */
+
+/* Stars Background (Mobile Fallback) */
+.stars-bg {
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, white, transparent),
+        radial-gradient(1px 1px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(1px 1px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent),
+        radial-gradient(1px 1px at 15% 60%, white, transparent),
+        radial-gradient(1px 1px at 70% 40%, white, transparent);
+    background-size: 200% 200%, 180% 180%, 250% 250%, 220% 220%, 190% 190%, 240% 240%, 210% 210%, 230% 230%;
+    background-position: 0% 0%, 40% 40%, 60% 60%, 20% 20%, 80% 80%, 30% 30%, 70% 70%, 50% 50%;
+    opacity: 0.3;
+}
+
+/* Corner Accents */
+.corner-accent {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    border-color: rgba(255, 255, 255, 0.3);
+    border-style: solid;
+    z-index: 20;
+    pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+    .corner-accent {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+.corner-tl {
+    top: 0;
+    left: 0;
+    border-width: 2px 0 0 2px;
+}
+
+.corner-tr {
+    top: 0;
+    right: 0;
+    border-width: 2px 2px 0 0;
+}
+
+.corner-bl {
+    bottom: 5vh;
+    left: 0;
+    border-width: 0 0 2px 2px;
+}
+
+.corner-br {
+    bottom: 5vh;
+    right: 0;
+    border-width: 0 2px 2px 0;
+}
+
+/* Dither Pattern */
+.dither-pattern {
+    background-image:
+        repeating-linear-gradient(0deg, transparent 0px, transparent 1px, white 1px, white 2px),
+        repeating-linear-gradient(90deg, transparent 0px, transparent 1px, white 1px, white 2px);
+    background-size: 3px 3px;
+    opacity: 0.4;
+    position: absolute;
+    right: -0.75rem;
+    top: 0;
+    bottom: 0;
+    width: 0.25rem;
+}
+
+/* Branding Hiding (Aggressive) */
+[data-us-project] {
+    position: relative !important;
+    overflow: hidden !important;
+    /* Ensure it clicks through to content if needed, but usually background */
+}
+
+/* Crop canvas bottom */
+[data-us-project] canvas {
+    clip-path: inset(0 0 0 0) !important;
+    /* Changed from 10% bottom crop to full view for bg */
+}
+
+[data-us-project] * {
+    pointer-events: none !important;
+}
+
+[data-us-project] a[href*="unicorn"],
+[data-us-project] button[title*="unicorn"],
+[data-us-project] div[title*="Made with"],
+[data-us-project] .unicorn-brand,
+[data-us-project] [class*="brand"],
+[data-us-project] [class*="credit"],
+[data-us-project] [class*="watermark"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+}
+
+/* Wrapper for Slide 6 Integration */
+#unicorn-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background: black;
+    /* Fallback */
+}
+
+/* Ensure existing content sits on top */
+#slide-projects .parallax-stack-container {
+    position: relative;
+    z-index: 10;
+    background: transparent !important;
+    /* Ensure transparent to see unicorn bg */
+}
+
+/* Header Styles */
+.us-header-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    /* Slight backdrop */
+    backdrop-filter: blur(4px);
+}
+
+.us-logo-text {
+    font-family: var(--us-font-mono);
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    font-style: italic;
+    transform: skewX(-12deg);
+    color: white;
+}
+
+.us-footer-bar {
+    position: absolute;
+    bottom: 5vh;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Footer animation pulses */
+.pulse-dot {
+    width: 0.25rem;
+    height: 0.25rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .5;
+    }
+}

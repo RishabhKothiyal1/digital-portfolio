@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reshare Karo - Antigravity Case Study</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Antigravity Design System */
+        :root {
+            --bg-deep: #050508;
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-highlight: rgba(255, 255, 255, 0.1);
+            --accent-cyan: #00f3ff;
+            --accent-purple: #9d00ff;
+            --accent-pink: #ff0096;
+            /* Specific for Reshare Karo */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            perspective: 2000px;
+            /* Deep perspective for 3D feels */
+        }
+
+        /* Ambient Background */
+        .ambient-void {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(255, 0, 150, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(157, 0, 255, 0.06) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float-up linear infinite;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        th {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        h1.hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        h2.section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2.section-title::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent-pink);
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Layout */
+        .viewport-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            margin-bottom: 5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-surface);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3.5rem;
+            margin-bottom: 3rem;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            /* Fast transform for JS tilt */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Subtle gradient sheen on cards */
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-highlight);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Floaters Animation */
+        .float-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .float-med {
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes float-up {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.5;
+            }
+
+            80% {
+                opacity: 0.5;
+            }
+
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        /* List Styling */
+        ul {
+            list-style: none;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        ul li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        ul li::before {
+            content: '>';
+            color: var(--accent-pink);
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+        }
+
+        /* Tech Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .tech-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .tech-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* Showcase Image Wrapper */
+        .showcase-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .showcase-wrapper:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 30px rgba(255, 0, 150, 0.15);
+        }
+
+        /* Footer */
+        .case-footer {
+            margin-top: 5rem;
+            text-align: center;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .glass-card {
+                padding: 2rem;
+            }
+
+            .viewport-wrapper {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-void">
+        <!-- JS will populate particles -->
+    </div>
+
+    <main class="viewport-wrapper">
+        <a href="index.html#projects" class="nav-back">
+            <span>&larr; Return to Orbit</span>
+        </a>
+
+        <header style="margin-bottom: 6rem; text-align: center; position: relative; z-index: 10;">
+            <div class="float-slow">
+                <h1 class="hero-title">Reshare Karo</h1>
+                <p style="font-size: 1.4rem; color: var(--text-secondary); font-weight: 300;">Seamless & Secure
+                    Real-time File Sharing</p>
+            </div>
+        </header>
+
+        <!-- Showcase -->
+        <div class="float-med" id="showcase-card" style="margin-bottom: 5rem; perspective: 1000px;">
+            <!-- Placeholder for Reshare Karo Screenshot - User can replace this later or use a generic file icon -->
+            <div
+                style="width: 100%; height: 400px; background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; color: white;">
+                <span style="font-family: 'Space Grotesk'; font-size: 2rem; opacity: 0.5;">Project Interface
+                    Showcase</span>
+            </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title">01_The Vision</h2>
+            <p>
+                <strong>Reshare Karo</strong> was born from the need to simplify the digital hand-off. Traditional file
+                sharing
+                often involves login walls, expiring links, or slow upload throttles. Reshare Karo eliminates friction
+                by providing
+                an instant, no-login-required platform for sharing files securely.
+            </p>
+            <p>
+                Whether it's a code snippet, a large video file, or an archive, Reshare Karo handles it with efficiency,
+                ensuring that your data gets from Point A to Point B without unnecessary hurdles.
+            </p>
+        </div>
+
+        <!-- Tech Stack & Architecture -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title" style="--accent-pink: var(--accent-purple);">02_Core Architecture</h2>
+            <p>Built for resilience and speed, utilizing a modern MERN stack architecture to handle concurrent uploads
+                and downloads.</p>
+
+            <div style="margin-top: 2.5rem; display: grid; gap: 2.5rem;">
+                <!-- Full Stack -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Modern Stack (MERN)</h3>
+                    <p style="margin-bottom: 0;">
+                        Leveraging <strong style="color: var(--accent-pink);">React</strong> for a responsive frontend
+                        and
+                        <strong style="color: var(--accent-pink);">Node.js/Express</strong> for a robust backend.
+                        MongoDB handles metadata efficiently, ensuring quick retrieval of file links.
+                    </p>
+                </div>
+
+                <!-- Security -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Secure Transmission</h3>
+                    <p style="margin-bottom: 0;">
+                        Files are handled with secure protocols during transit. The system generates unique,
+                        non-guessable
+                        links for every upload, ensuring that only intended recipients can access the content.
+                    </p>
+                </div>
+
+                <!-- User Experience -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Optimized UX</h3>
+                    <p style="margin-bottom: 0;">
+                        Features a drag-and-drop interface, real-time upload progress bars, and instant link generation.
+                        Designed to be mobile-first, ensuring accessibility across all devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Use Cases -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title">03_Use Cases</h2>
+
+            <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Developer Collaboration</h3>
+            <p>
+                Quickly share logs, config files, or binaries without committing to a repo or using email attachments.
+            </p>
+
+            <h3 style="font-size: 1.3rem; margin-bottom: 1rem; margin-top: 2rem;">Creative Handoffs</h3>
+            <p>
+                Send high-fidelity assets to clients or team members immediately after export, bypassing complex cloud
+                drive permissions.
+            </p>
+        </div>
+
+        <!-- Impact -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title">04_Impact</h2>
+            <p>
+                Reshare Karo simplifies the web's most fundamental task: sharing. It stands as a testament to the power
+                of
+                utility-focused engineering—where the goal isn't to add features, but to remove barriers.
+            </p>
+        </div>
+
+        <div class="case-footer">
+            &copy; 2026 Reshare Karo Design Study. rishabh kothiyal.
+        </div>
+
+    </main>
+
+    <script>
+        // --- Antigravity Physics Engine (Lightweight) ---
+
+        // 1. Particle System
+        const ambientVoid = document.querySelector('.ambient-void');
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // Random properties
+            const size = Math.random() * 2 + 1; // 1px to 3px
+
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + 'vw';
+
+            // Random delay and duration
+            const duration = Math.random() * 20 + 15; // 15s to 35s
+            const delay = Math.random() * -20; // Start at random times
+
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = delay + 's';
+
+            ambientVoid.appendChild(particle);
+        }
+
+        // 2. Interactive Tilt Effect
+        const cards = document.querySelectorAll('.tilt-card, #showcase-card');
+        const wrapper = document.querySelector('.viewport-wrapper');
+
+        document.addEventListener('mousemove', (e) => {
+            // Calculate mouse position relative to center of screen ( -1 to 1 )
+            const xNormal = (e.clientX / window.innerWidth) * 2 - 1;
+            const yNormal = (e.clientY / window.innerHeight) * 2 - 1;
+
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+
+                // Only animate if somewhat visible
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    // Slight rotation based on mouse position
+                    // Multiplier controls intensity
+                    const rotateX = -yNormal * 2; // Tilt up/down
+                    const rotateY = xNormal * 2;  // Tilt left/right
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
+        });
+
+        // 3. Reset on mouse leave
+        document.addEventListener('mouseleave', () => {
+            cards.forEach(card => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

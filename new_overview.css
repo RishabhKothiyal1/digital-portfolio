@@ -1,0 +1,474 @@
+:root {
+    --bg-color: #0F0F0F;
+    /* Deep Black */
+    --card-bg: #1A1A1A;
+    --text-main: #FFFFFF;
+    --text-muted: #888888;
+    --accent: #4FD1C5;
+    /* Teal */
+    --font-main: 'Inter', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    overflow: hidden;
+    /* Main scroll handled by panes */
+    height: 100vh;
+    width: 100vw;
+}
+
+#three-bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, #1a1a1a, #121212);
+}
+
+.kinetic-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+    /* Allow growth */
+}
+
+/* --- LEFT PANE (Sticky) --- */
+/* --- LEFT PANE (Sticky) --- */
+/* --- LEFT PANE (Sticky) --- */
+.left-pane {
+    width: 20%;
+    /* Minimally sized */
+    height: 100%;
+    padding: 1rem;
+    padding-bottom: 0;
+    /* Added to touch bottom */
+    /* Reduced further as requested */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Fix: Don't center, start from top to avoid clipping */
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    /* Sticky needs constrained height context */
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    background: radial-gradient(circle at top left, #1a1a1a, #0f0f0f);
+    z-index: 10;
+    overflow: hidden;
+    /* No scroll for left pane */
+}
+
+.left-pane::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+}
+
+.identity-wrapper {
+    /* Auto margin removed to let flex parent handle spacing */
+    padding-top: 0;
+}
+
+h1.stagger-text {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    /* Reduced to 2rem */
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    color: var(--text-main);
+}
+
+.letter {
+    display: inline-block;
+    opacity: 0;
+    /* Hidden for animation */
+}
+
+.role-badges {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 50px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 1;
+    /* Fallback: Visible */
+}
+
+.bio-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ccc;
+    max-width: 500px;
+    opacity: 1;
+    /* Fallback: Visible */
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Hello Tag */
+.hello-tag {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.5rem 1.5rem;
+    background: var(--accent);
+    color: #000;
+    font-weight: 800;
+    border-radius: 50px 50px 50px 0;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(79, 209, 197, 0.4);
+    transform-origin: bottom left;
+    animation: wave 3s infinite ease-in-out;
+}
+
+@keyframes wave {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    10%,
+    30% {
+        transform: rotate(5deg);
+    }
+
+    20% {
+        transform: rotate(-5deg);
+    }
+}
+
+/* Character Image Wrapper */
+.char-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    /* Push to bottom */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* Align bottom */
+    z-index: 0;
+    pointer-events: none;
+    flex-shrink: 1;
+    min-height: 0;
+    padding-top: 1rem;
+    /* Small buffer from text */
+}
+
+.char-img-standing {
+    max-width: 100%;
+    max-height: 50vh;
+    /* Decreased as requested */
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+    /* Anchor bottom */
+    opacity: 1;
+    filter: drop-shadow(0 0 20px rgba(79, 209, 197, 0.2));
+}
+
+.right-pane {
+    width: 80%;
+    /* Maximized to 75% */
+    height: auto;
+    /* Allow full content height */
+    overflow: visible;
+    padding: 3rem;
+    padding-bottom: 0;
+    /* No gap */
+    scroll-behavior: smooth;
+    /* Native smooth scroll */
+}
+
+
+
+.stream-section {
+    margin-bottom: 4rem;
+    /* Reduced gap */
+}
+
+.stream-section:last-child {
+    margin-bottom: 0;
+}
+
+.section-title {
+    font-size: 1rem;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    /* Compact padding */
+    margin-bottom: 2rem;
+    /* Compact margin */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+    cursor: default;
+    opacity: 1;
+    /* Fallback: Visible */
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: var(--accent);
+}
+
+.card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+    color: var(--text-main);
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+/* Timeline/Education Specifics */
+.timeline-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-card .year {
+    font-family: monospace;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+.edu-logo {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0.9);
+}
+
+.rounded-logo {
+    border-radius: 50%;
+}
+
+/* --- CONNECTED TIMELINE --- */
+.timeline-container {
+    position: relative;
+    padding-left: 2rem;
+    border-left: 2px solid rgba(79, 209, 197, 0.3);
+}
+
+/* Wrapper anchors the layout and the DOT */
+.timeline-item-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+/* The Dot attaches to the WRAPPER (Static) */
+.timeline-item-wrapper::before {
+    content: '';
+    position: absolute;
+    left: -2.4rem;
+    /* Calculated alignment */
+    top: 2rem;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent);
+    z-index: 2;
+    /* Static dot, no transport triggers */
+}
+
+.timeline-item-wrapper:last-child {
+    margin-bottom: 0;
+}
+
+/* Ensure the card inside pushes away normally */
+.timeline-item-wrapper .card {
+    margin-bottom: 0;
+    /* Wrapper handles gap */
+    will-change: transform;
+    /* Performance Hint */
+}
+
+/* CSS-Only Performant Hover Effect (Replaces Anime.js for Hover) */
+.card {
+    /* Existing base styles remain */
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.03) translateZ(0);
+    /* Hardware accelerated */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    /* Slightly reduced for perf */
+    border-color: var(--accent);
+}
+
+/* Highlight dot when hovering wrapper */
+.timeline-item-wrapper:hover::before {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px var(--accent);
+    transition: transform 0.3s ease;
+}
+
+/* Scrollbar */
+.right-pane::-webkit-scrollbar {
+    width: 8px;
+}
+
+.right-pane::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+.right-pane::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+/* Mobile & Tablet */
+@media (max-width: 1024px) {
+    body {
+        overflow-y: auto;
+        /* Enable native scroll */
+    }
+
+    .kinetic-layout {
+        flex-direction: column;
+        overflow: visible;
+        /* Let it flow */
+    }
+
+    /* Stack Identity on Top */
+    .left-pane {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        padding: 3rem 2rem;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        align-items: center;
+        text-align: center;
+    }
+
+    .identity-wrapper {
+        padding-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1.stagger-text {
+        font-size: 3rem;
+        /* Smaller title mobile */
+        margin-bottom: 1.5rem;
+    }
+
+    .role-badges {
+        justify-content: center;
+    }
+
+    .bio-text {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* Stack Stream Below */
+    .right-pane {
+        width: 100%;
+        height: auto;
+        padding: 2rem 1.5rem;
+        overflow: visible;
+        /* No internal scroll */
+    }
+
+    .stream-section {
+        margin-bottom: 3rem;
+    }
+
+    .section-title {
+        width: 100%;
+        text-align: center;
+        border-bottom: none;
+        /* Cleaner look */
+        position: relative;
+    }
+
+    .section-title::after {
+        /* Centered underline */
+        content: '';
+        display: block;
+        width: 50px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0.5rem auto 0;
+    }
+
+    .card {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Adjust Timeline for Mobile */
+    .timeline-container {
+        padding-left: 1.5rem;
+    }
+
+    .timeline-container .card::before {
+        left: -1.875rem;
+        /* -1.5rem - 6px */
+    }
+
+    /* Reset Character for Mobile */
+    .char-wrapper {
+        position: relative;
+        width: 100%;
+        left: auto;
+        bottom: auto;
+        pointer-events: all;
+        margin-top: 0;
+        z-index: 1;
+    }
+
+    .char-img-standing {
+        max-width: 100%;
+        max-height: 50vh;
+    }
+}

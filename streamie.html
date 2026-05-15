@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamie - Antigravity Case Study</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Antigravity Design System */
+        :root {
+            --bg-deep: #050508;
+            --glass-surface: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-highlight: rgba(255, 255, 255, 0.1);
+            --accent-cyan: #00f3ff;
+            --accent-purple: #9d00ff;
+            --accent-orange: #e84118;
+            /* Streamie Orange */
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            perspective: 2000px;
+        }
+
+        /* Ambient Background */
+        .ambient-void {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(232, 65, 24, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(255, 100, 50, 0.06) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: float-up linear infinite;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        th {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        h1.hero-title {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        h2.section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2.section-title::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--accent-orange);
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 65ch;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Layout */
+        .viewport-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+            margin-bottom: 5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-5px);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-surface);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3.5rem;
+            margin-bottom: 3rem;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .glass-card:hover {
+            border-color: var(--glass-highlight);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Floaters Animation */
+        .float-slow {
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .float-med {
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes float-up {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.5;
+            }
+
+            80% {
+                opacity: 0.5;
+            }
+
+            to {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+        }
+
+        /* List Styling */
+        ul {
+            list-style: none;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        ul li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        ul li::before {
+            content: '>';
+            color: var(--accent-orange);
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+        }
+
+        /* Showcase Image Wrapper */
+        .showcase-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+            transition: all 0.5s ease;
+        }
+
+        .showcase-wrapper:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 30px rgba(232, 65, 24, 0.15);
+        }
+
+        /* Footer */
+        .case-footer {
+            margin-top: 5rem;
+            text-align: center;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            padding-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .glass-card {
+                padding: 2rem;
+            }
+
+            .viewport-wrapper {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-void"></div>
+
+    <main class="viewport-wrapper">
+        <a href="index.html#projects" class="nav-back">
+            <span>&larr; Return to Orbit</span>
+        </a>
+
+        <header style="margin-bottom: 6rem; text-align: center; position: relative; z-index: 10;">
+            <div class="float-slow">
+                <h1 class="hero-title">Streamie</h1>
+                <p style="font-size: 1.4rem; color: var(--text-secondary); font-weight: 300;">
+                    Dynamic Content Aggregation Platform
+                </p>
+            </div>
+        </header>
+
+        <!-- Showcase -->
+        <div class="float-med" id="showcase-card" style="margin-bottom: 5rem; perspective: 1000px;">
+            <div
+                style="width: 100%; height: 400px; background: linear-gradient(135deg, #200500 0%, #1a1a1a 100%); border-radius: 20px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; color: white;">
+                <span style="font-family: 'Space Grotesk'; font-size: 2rem; opacity: 0.5;">Streamie Dashboard</span>
+            </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title">01_The Vision</h2>
+            <p>
+                <strong>Streamie</strong> addresses the fragmentation of modern media viewing. Users are bombarded with
+                static lists and disjointed recommendations.
+            </p>
+            <p>
+                Streamie is built to be a unified, visually immersive exploration engine. It pulls data from multiple
+                sources to create a "cinema-first" browsing experience right in the browser.
+            </p>
+        </div>
+
+        <!-- Architecture -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title" style="--accent-orange: #ff6b6b;">02_Content Engine</h2>
+            <p>A pure frontend application that acts as a powerful lens for external datasets.</p>
+
+            <div style="margin-top: 2.5rem; display: grid; gap: 2.5rem;">
+                <!-- API Integration -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Multi-Source API Fusion</h3>
+                    <p style="margin-bottom: 0;">
+                        Streamie doesn't just display lists. It intelligently merges data from TMDB (The Movie Database)
+                        and other open APIs.
+                        It handles asynchronous fetching, error states, and pagination seamlessly to create an "infinite
+                        scroll" experience.
+                    </p>
+                </div>
+
+                <!-- Searching -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Debounced Search</h3>
+                    <p style="margin-bottom: 0;">
+                        To minimize API costs and improve UX, the search bar implements debouncing. As you type,
+                        Streamie waits
+                        for the perfect moment to query, returning results instantly without flooding the network.
+                    </p>
+                </div>
+
+                <!-- Responsive UI -->
+                <div>
+                    <h3 style="font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff;">Fluid Grid Layouts</h3>
+                    <p style="margin-bottom: 0;">
+                        Using modern CSS Flexbox and Grid, the interface adapts from a 4K cinema display down to a
+                        mobile phone,
+                        preserving the "poster art" aesthetic across all viewports.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Impact -->
+        <div class="glass-card tilt-card">
+            <h2 class="section-title">03_Impact</h2>
+            <p>
+                Streamie serves as a blueprint for building engaging single-page applications (SPAs) without heavy
+                backend infrastructure.
+                It proves that with the right APIs and design sense, the browser is powerful enough to deliver app-like
+                experiences.
+            </p>
+        </div>
+
+        <div class="case-footer">
+            &copy; 2026 Streamie Case Study. rishabh kothiyal.
+        </div>
+
+    </main>
+
+    <script>
+        // --- Antigravity Physics Engine (Lightweight) ---
+        const ambientVoid = document.querySelector('.ambient-void');
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 2 + 1;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 20 + 15;
+            const delay = Math.random() * -20;
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = delay + 's';
+            ambientVoid.appendChild(particle);
+        }
+
+        const cards = document.querySelectorAll('.tilt-card, #showcase-card');
+        document.addEventListener('mousemove', (e) => {
+            const xNormal = (e.clientX / window.innerWidth) * 2 - 1;
+            const yNormal = (e.clientY / window.innerHeight) * 2 - 1;
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const rotateX = -yNormal * 2;
+                    const rotateY = xNormal * 2;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
+        });
+        document.addEventListener('mouseleave', () => {
+            cards.forEach(card => card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)');
+        });
+    </script>
+</body>
+
+</html>

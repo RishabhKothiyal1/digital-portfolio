@@ -1,0 +1,270 @@
+<div class="certs-container">
+    <!-- Navigation Header (Hidden in Root View) -->
+    <div id="certs-nav-header" class="hidden" style="margin-bottom: 1rem; width: 100%; text-align: left;">
+        <button id="cert-back-btn" class="back-btn" aria-label="Back to Certificates">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Root
+        </button>
+    </div>
+
+    <!-- ROOT VIEW: Single "Certificates" Folder -->
+    <div id="certs-root-view" class="view-section">
+        <div class="folder-wrapper" id="root-certs-trigger">
+            <div class="folder-trigger">
+                <div class="folder-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path
+                            d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                    </svg>
+                </div>
+                <span class="folder-label">Certificates</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- NESTED VIEW: Grid of 9 Folders -->
+    <div id="certs-nested-view" class="view-section hidden">
+        <h3 class="nested-heading"
+            style="width: 100%; text-align: center; margin-bottom: 2rem; font-weight: 500; opacity: 0.9;">Certificates
+        </h3>
+
+        <div class="certs-grid">
+            <!-- 1. Google -->
+            <div class="folder-wrapper" id="google-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">Google</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">Google</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/9122409"
+                                    target="_blank">Introduction to Generative AI</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/9122568"
+                                    target="_blank">Introduction to Large Language Models</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21309924"
+                                    target="_blank">Encoder-Decoder Architecture</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/9122621"
+                                    target="_blank">Introduction to Responsible AI</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21202971"
+                                    target="_blank">Introduction to Data Analytics in Google Cloud</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21309453"
+                                    target="_blank">Design Foundations for Streaming</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21334719"
+                                    target="_blank">GDC Platform Introduction</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21455507"
+                                    target="_blank">Compute, Network, and Storage in GDC</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21200324"
+                                    target="_blank">Security Command Center Fundamentals</a></li>
+                            <li><a href="https://www.skills.google/public_profiles/8e9b9d93-856d-481c-a62a-68dbd9653231/badges/21482348"
+                                    target="_blank">Introduction to Security Principles</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Deloitte -->
+            <div class="folder-wrapper" id="deloitte-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">Deloitte</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">Deloitte</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/E9pA6qsdbeyEkp3ti_9PBTqmSxAf6zZTseP_kmgQwY2Ndohi4GA6v_1751658594614_completion_certificate.pdf"
+                                    target="_blank">Deloitte Australia - Cyber Job Simulation</a></li>
+                            <li><a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_kmgQwY2Ndohi4GA6v_1751566784281_completion_certificate.pdf"
+                                    target="_blank">Deloitte Australia - Data Analytics Job Simulation</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. AWS -->
+            <div class="folder-wrapper" id="aws-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">AWS</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">AWS</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://www.credly.com/badges/3cb33890-55e1-4560-934c-64868a23058f/public_url"
+                                    target="_blank">AWS Academy Graduate - Cloud Foundations</a></li>
+                            <li><a href="https://www.credly.com/badges/cb3458cd-a28c-4860-94e8-46d47055725f/public_url"
+                                    target="_blank">AWS Academy Graduate - Machine Learning Foundations</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 4. Wells Fargo -->
+            <div class="folder-wrapper" id="wellsfargo-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">Wells Fargo</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">Wells Fargo</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://www.theforage.com/completion-certificates/nkmk7gJitYs4TBvoA/9Wvq4L2WCFQDyyPp3_nkmk7gJitYs4TBvoA_kmgQwY2Ndohi4GA6v_1750271918342_completion_certificate.pdf"
+                                    target="_blank">Wells Fargo - Software Engineering Job Simulation</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Anthropic -->
+            <div class="folder-wrapper" id="anthropic-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">Anthropic</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">Anthropic</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="http://verify.skilljar.com/c/6j7momdy5bhr" target="_blank">Introduction to
+                                    Model Context Protocol</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. IIT Madras -->
+            <div class="folder-wrapper" id="iitmadras-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">IIT Madras</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">IIT Madras</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://drive.google.com/file/d/1WD3Q8YyqYSxzEV1xXxeCY55_Am7kc2Bv/view?usp=sharing"
+                                    target="_blank">Python course on Multiple Languages</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. IIT Bombay -->
+            <div class="folder-wrapper" id="iitbombay-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">IIT Bombay</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">IIT Bombay</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://drive.google.com/file/d/1rUbdxvTRHK5t3VoaoZTci5swl_-gkCv4/view?usp=sharing"
+                                    target="_blank">Java Training and Assessment (via IIT Bombay)</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. HCL GUVI -->
+            <div class="folder-wrapper" id="hclguvi-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">HCL GUVI</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">HCL GUVI</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://www.guvi.in/share-certificate/01Q60L027651a46r5t"
+                                    target="_blank">Introduction to Data Engineering and Bigdata</a></li>
+                            <li><a href="https://www.guvi.in/verify-certificate?id=4613d513zs8E9jFf63"
+                                    target="_blank">Game development using PyGame</a></li>
+                            <li><a href="https://www.guvi.in/share-certificate/AJ16690krl36O123z8"
+                                    target="_blank">Python</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Hackathon -->
+            <div class="folder-wrapper" id="hackathon-folder">
+                <div class="folder-trigger">
+                    <div class="folder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path
+                                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+                        </svg>
+                    </div>
+                    <span class="folder-label">Hackathon</span>
+                </div>
+                <div class="folder-content">
+                    <div class="folder-tab">Hackathon</div>
+                    <div class="folder-inner-body">
+                        <button class="close-folder-btn" aria-label="Close"></button>
+                        <ul class="folder-list">
+                            <li><a href="https://devfolio.co/projects/voteblock-d586" target="_blank">VoteBlock -
+                                    Dapp</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

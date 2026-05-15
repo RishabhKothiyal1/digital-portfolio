@@ -1,0 +1,152 @@
+/* =========================================
+   INDEX HUD REDESIGN
+   Tone: Editorial / Digital HUD / Brutalist
+   ========================================= */
+
+#slide-index {
+    background: transparent !important;
+    /* Force Transparency */
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#slide-index .particles-container {
+    opacity: 0.4;
+    /* Subtle background movement */
+}
+
+/* MAIN CONTAINER */
+.index-hud-container {
+    max-width: 1400px;
+    width: 90%;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* HEADER (Clean, No Lines) */
+.index-header {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    padding-top: 10vh;
+    /* Moved down */
+    position: relative;
+}
+
+.index-header h2 {
+    font-size: 1.5rem;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    opacity: 1;
+    color: #fff;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* REMOVED ::after pseudo-element */
+
+/* MENU LIST */
+.index-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.index-item {
+    cursor: pointer;
+    position: relative;
+    padding: 0.75rem 0;
+    /* Reduced padding */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    /* Reduced col size */
+    align-items: center;
+}
+
+/* First item larger/different border if needed, 
+   but uniform looks better for 'index' feel */
+
+.index-item:hover {
+    padding-left: 1.5rem;
+    /* Reduced hover shift */
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+/* NUMBER (01, 02...) */
+.index-num {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    /* Reduced size */
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.3s;
+}
+
+.index-item:hover .index-num {
+    color: #fff;
+}
+
+/* TITLE */
+.index-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    /* Reduced size */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.85);
+    transform-origin: left;
+    transition: transform 0.4s, color 0.3s;
+}
+
+.index-item:hover .index-title {
+    color: #fff;
+    transform: translateX(10px);
+}
+
+/* ARROW INDICATOR */
+.index-arrow {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #fff;
+}
+
+.index-item:hover .index-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .index-item {
+        grid-template-columns: 50px 1fr;
+        padding: 1.5rem 0;
+    }
+
+    .index-arrow {
+        display: none;
+        /* Hide arrow on mobile to save space */
+    }
+
+    .index-title {
+        font-size: 2.5rem;
+    }
+
+    .index-header {
+        margin-bottom: 2rem;
+    }
+}
